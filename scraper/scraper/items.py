@@ -5,43 +5,25 @@
 
 import scrapy
 
-
-def clean(text):
-    text = text.strip("()")
-    text = ''.join(text)
-    return text
-
-def join_text(text):
-    text = ''.join(text)
-    return text
-
-def test_text(text):
-    return text.strip(', ')
-
-
-class Categories(scrapy.Item):
+class Games(scrapy.Item):
     game_id = scrapy.Field()
+    
     categories = scrapy.Field()
-    category_j_1 = scrapy.Field()
-    category_j_2 = scrapy.Field()
-    category_j_3 = scrapy.Field()
-    category_j_4 = scrapy.Field()
-    category_j_5 = scrapy.Field()
-    category_j_6 = scrapy.Field()
-    category_dj_1 = scrapy.Field()
-    category_dj_2 = scrapy.Field()
-    category_dj_3 = scrapy.Field()
-    category_dj_4 = scrapy.Field()
-    category_dj_5 = scrapy.Field()
-    category_dj_6 = scrapy.Field()
-    category_fj = scrapy.Field()
-    category_tb = scrapy.Field()
+    category_J_1 = scrapy.Field()
+    category_J_2 = scrapy.Field()
+    category_J_3 = scrapy.Field()
+    category_J_4 = scrapy.Field()
+    category_J_5 = scrapy.Field()
+    category_J_6 = scrapy.Field()
+    category_DJ_1 = scrapy.Field()
+    category_DJ_2 = scrapy.Field()
+    category_DJ_3 = scrapy.Field()
+    category_DJ_4 = scrapy.Field()
+    category_DJ_5 = scrapy.Field()
+    category_DJ_6 = scrapy.Field()
+    category_FJ = scrapy.Field()
+    category_TB = scrapy.Field()
 
-class Clues(scrapy.Item):
-    game_id = scrapy.Field()
-    game_comments = scrapy.Field()
-    clue_id = scrapy.Field()
-    order_number = scrapy.Field()
-    value = scrapy.Field()
-    clue = scrapy.Field()
-    correct_response = scrapy.Field()
+    clue_ids = scrapy.Field()
+    clues = scrapy.Field()
+    correct_responses = scrapy.Field()
