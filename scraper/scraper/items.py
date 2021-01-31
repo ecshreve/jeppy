@@ -36,3 +36,12 @@ class Categories(scrapy.Item):
     category_dj_6 = scrapy.Field()
     category_fj = scrapy.Field()
     category_tb = scrapy.Field()
+
+class Clues(scrapy.Item):
+    game_id = scrapy.Field()
+    game_comments = scrapy.Field()
+    clue_id = scrapy.Field()
+    order_number = scrapy.Field()
+    value = scrapy.Field()
+    clue = scrapy.Field()
+    correct_response = scrapy.Field()
