@@ -4,4 +4,4 @@ scrape:
 
 dump:
 	cd scraper/cleaner; \
-	python cleaner.py
+	python runner.py
