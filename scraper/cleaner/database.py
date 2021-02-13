@@ -73,4 +73,4 @@ def get_random_clue(conn):
     rand_clue = cur.fetchone()
 
     clean_clue = cc.Clue(rand_clue[1], rand_clue[2], rand_clue[3], rand_clue[4], rand_clue[5])
-    print(clean_clue)
+    return clean_clue
