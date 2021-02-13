@@ -2,24 +2,7 @@ import json
 import pprint
 import unicodedata
 
-class Clue:
-    def __init__(self, game_id, clue_id, category, clue, answer):
-        self.game_id = game_id
-        self.clue_id = clue_id
-        self.category = category
-        self.clue = clue
-        self.answer = answer
-
-    def __repr__(self):
-        return ("\n\n" + self.game_id + " -- " + self.clue_id + " -- " + self.category + "\n" + self.clue + "\n" + "--> " + self.answer)
-
-class Game:
-    def __init__(self, game_id, clues):
-        self.game_id = game_id
-        self.clues = clues
-
-    def __repr__(self):
-        return self.game_id + "\n" + repr(self.clues)
+import clue as cc
 
 def clean_game(raw_game):
     clean_categories = {
@@ -45,8 +28,8 @@ def clean_game(raw_game):
         tmp_clue_id = clue_id[5:]
         category = clean_categories[tmp_clue_id] if len(tmp_clue_id) <= 2 else clean_categories[tmp_clue_id[:-2]]
         
-        c = Clue(game_id, tmp_clue_id, category, raw_game["clues"][index], raw_game["correct_responses"][index])
+        c = cc.Clue(game_id, tmp_clue_id, category, raw_game["clues"][index], raw_game["correct_responses"][index])
         clues.append(c)
 
-    g = Game(game_id, clues)
+    g = cc.Game(game_id, clues)
     return g
