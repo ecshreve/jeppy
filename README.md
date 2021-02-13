@@ -5,7 +5,7 @@
 ### makefile commands
 
 - `make scrape`: run the scraper and write output to a json file
-- `make dump`: print the formatted data to standard out (mostly for debugging)
+- `make run`: run whatever's in `cleaner/runner.py`
 
 ### example json dump for one game
 

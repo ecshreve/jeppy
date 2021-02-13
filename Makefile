@@ -2,6 +2,6 @@ scrape:
 	cd scraper; \
 	scrapy crawl games
 
-dump:
+run:
 	cd scraper/cleaner; \
 	python runner.py

@@ -3,14 +3,15 @@ import pprint
 import unicodedata
 
 class Clue:
-    def __init__(self, clue_id, clue, correct_response, category):
+    def __init__(self, game_id, clue_id, category, clue, answer):
+        self.game_id = game_id
         self.clue_id = clue_id
         self.category = category
         self.clue = clue
-        self.correct_response = correct_response
+        self.answer = answer
 
     def __repr__(self):
-        return ("\n\n" + self.clue_id + " -- " + self.category + "\n" + self.clue + "\n" + "--> " + self.correct_response)
+        return ("\n\n" + self.game_id + " -- " + self.clue_id + " -- " + self.category + "\n" + self.clue + "\n" + "--> " + self.answer)
 
 class Game:
     def __init__(self, game_id, clues):
@@ -38,13 +39,14 @@ def clean_game(raw_game):
         "TB": raw_game["category_TB"][0],
     }
 
+    game_id = raw_game["game_id"][0]
     clues = []
     for index, clue_id in enumerate(raw_game["clue_ids"]):
         tmp_clue_id = clue_id[5:]
         category = clean_categories[tmp_clue_id] if len(tmp_clue_id) <= 2 else clean_categories[tmp_clue_id[:-2]]
         
-        c = Clue(tmp_clue_id, raw_game["clues"][index], raw_game["correct_responses"][index], category)
+        c = Clue(game_id, tmp_clue_id, category, raw_game["clues"][index], raw_game["correct_responses"][index])
         clues.append(c)
 
-    g = Game(raw_game["game_id"][0], clues)
+    g = Game(game_id, clues)
     return g
