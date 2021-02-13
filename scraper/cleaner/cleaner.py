@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 import json
 import pprint
 import unicodedata
 
 class Clue:
     def __init__(self, clue_id, clue, correct_response, category):
-        self.clue_id = clue_id.encode("utf-8")
-        self.category = category.encode("utf-8")
-        self.clue = clue.encode("utf-8")
-        self.correct_response = correct_response.encode("utf-8")
+        self.clue_id = clue_id
+        self.category = category
+        self.clue = clue
+        self.correct_response = correct_response
 
     def __repr__(self):
         return ("\n\n" + self.clue_id + " -- " + self.category + "\n" + self.clue + "\n" + "--> " + self.correct_response)
@@ -47,7 +46,7 @@ def clean_game(raw_game):
         c = Clue(tmp_clue_id, raw_game["clues"][index], raw_game["correct_responses"][index], category)
         clues.append(c)
 
-    g = Game(raw_game["game_id"][0].encode("utf-8"), clues)
+    g = Game(raw_game["game_id"][0], clues)
     return g
 
 
