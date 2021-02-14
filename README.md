@@ -1,6 +1,10 @@
 # jeppy
 
-## notes
+## work in progress demo
+
+`make practice`
+
+![jeppy](static/jeppy.gif "jeppy")
 
 ### makefile commands
 
