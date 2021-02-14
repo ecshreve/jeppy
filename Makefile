@@ -1,11 +1,21 @@
 scrape:
-	cd scraper; \
+	cd jeppy/scraper; \
 	scrapy crawl games
 
-run:
-	cd scraper/cleaner; \
-	python runner.py
+initdb:
+	cd jeppy; \
+	python -m scripts.initdb
+
+dumptodb:
+	cd jeppy; \
+	python -m scripts.dumptodb
 
 practice:
-	cd scraper/cleaner; \
-	python practice.py
+	cd jeppy; \
+	python -m scripts.practice
+
+clean:
+	rm -rf data/; \
+	mkdir data
+
+clean-and-run: clean scrape initdb dumptodb

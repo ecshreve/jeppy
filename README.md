@@ -4,8 +4,12 @@
 
 ### makefile commands
 
-- `make scrape`: run the scraper and write output to a json file
-- `make run`: run whatever's in `cleaner/runner.py`
+- `make scrape`: run the scraper and write output to a `data/dump.json`
+- `make initdb`: create tables in the sqlite db
+- `make dumptodb`: populate the sqlite db with data from the `dump.json` file
+- `make practice`: run the simple practice game loop
+- `make clean`: remove contents of the `data/` directory
+- `make clean-and-run`: remove contents of `data/` and then run all the necessary tasks to rebuild and populate the sqlite db
 
 ### example json dump for one game
 

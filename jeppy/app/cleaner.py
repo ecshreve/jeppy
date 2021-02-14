@@ -2,7 +2,8 @@ import json
 import pprint
 import unicodedata
 
-import clue as cc
+from app.clue import Clue
+from app.clue import Game
 
 def clean_game(raw_game):
     clean_categories = {
@@ -28,8 +29,8 @@ def clean_game(raw_game):
         tmp_clue_id = clue_id[5:]
         category = clean_categories[tmp_clue_id] if len(tmp_clue_id) <= 2 else clean_categories[tmp_clue_id[:-2]]
         
-        c = cc.Clue(game_id, tmp_clue_id, category, raw_game["clues"][index], raw_game["correct_responses"][index])
+        c = Clue(game_id, tmp_clue_id, category, raw_game["clues"][index], raw_game["correct_responses"][index])
         clues.append(c)
 
-    g = cc.Game(game_id, clues)
+    g = Game(game_id, clues)
     return g

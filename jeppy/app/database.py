@@ -3,7 +3,7 @@ import random
 import sqlite3
 from sqlite3 import Error
 
-import clue as cc
+from app.clue import Clue
 
 
 def create_connection(db_file):
@@ -12,7 +12,7 @@ def create_connection(db_file):
     try:
         conn = sqlite3.connect(db_file)
     except Error as e:
-        print(e)
+        logging.error(e)
 
     return conn
 
@@ -72,5 +72,5 @@ def get_random_clue(conn):
     cur.execute("SELECT * FROM clues WHERE id=?", (rand_id,))
     rand_clue = cur.fetchone()
 
-    clean_clue = cc.Clue(rand_clue[1], rand_clue[2], rand_clue[3], rand_clue[4], rand_clue[5])
+    clean_clue = Clue(rand_clue[1], rand_clue[2], rand_clue[3], rand_clue[4], rand_clue[5])
     return clean_clue

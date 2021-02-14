@@ -45,8 +45,8 @@ class GamesSpider(scrapy.Spider):
         yield response.follow(answers_url, self.parse_answers, meta = {'jep_item': jep_item})
 
         # TODO: uncomment this when we decide on a link following approach.
-        for a in response.xpath('//a[contains(text(), "next game")]/@href'):
-            yield response.follow(a, self.parse)
+        # for a in response.xpath('//a[contains(text(), "next game")]/@href'):
+        #     yield response.follow(a, self.parse)
 
     def parse_answers(self, response):
         jep_item = response.meta['jep_item']
