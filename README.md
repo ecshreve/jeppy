@@ -1,6 +1,6 @@
 # jeppy
 
-fun little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com/showgame.php?game_id=6938 and writes them to a sqlite database
+fun little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com and writes them to a sqlite database
 
 ## work in progress demo
 
