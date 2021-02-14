@@ -1,9 +1,9 @@
 import json
 import logging
 
-from app.cleaner import clean_game
-from app.database import create_connection
-from app.database import insert_clue
+from game.cleaner import clean_game
+from game.database import create_connection
+from game.database import insert_clue
 
 logging.basicConfig(level=logging.INFO)
 logging.info("starting to populate tables")

@@ -19,3 +19,8 @@ clean:
 	mkdir data
 
 clean-and-run: clean scrape initdb dumptodb
+
+run-client:
+	cd jeppy/app; \
+	export FLASK_APP=app.py; \
+	flask run

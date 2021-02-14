@@ -1,7 +1,7 @@
 import logging
 
-from app.database import create_connection
-from app.database import get_random_clue
+from game.database import create_connection
+from game.database import get_random_clue
 
 logging.basicConfig(level=logging.INFO)
 

@@ -16,6 +16,7 @@ fun little project that scrapes historical jeopardy questions/answers from https
 - `make practice`: run the simple practice game loop
 - `make clean`: remove contents of the `data/` directory
 - `make clean-and-run`: remove contents of `data/` and then run all the necessary tasks to rebuild and populate the sqlite db
+- `make run-client`: run the flask app
 
 ### example json dump for one game
 

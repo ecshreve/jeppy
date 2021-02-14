@@ -1,7 +1,7 @@
 import logging
 
-from app.database import create_connection
-from app.database import create_tables
+from game.database import create_connection
+from game.database import create_tables
 
 logging.basicConfig(level=logging.INFO)
 logging.info("starting to create tables")
