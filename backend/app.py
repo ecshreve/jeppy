@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -76,10 +76,20 @@ def populateDB():
         print(e)
 
 
-@app.route('/')
-def index():
-    populateDB()
-    return "Hello, world!"
+@app.route("/clues", methods=["GET"])
+def clues():
+    game_id_param = request.args.get("game_id")
+    method = request.method
+    if (method.lower() == "get"):
+        clues = Clue.query.filter(Clue.game_id == game_id_param).all()
+        return jsonify([{
+            "id": c.id,
+            "game_id": c.game_id,
+            "clue_id": c.clue_id,
+            "category": c.category,
+            "question": c.question,
+            "answer": c.answer
+        } for c in clues])
 
 
 if __name__ == "__main__":
