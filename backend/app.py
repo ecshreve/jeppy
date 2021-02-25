@@ -82,7 +82,7 @@ def clues():
     method = request.method
     if (method.lower() == "get"):
         clues = Clue.query.filter(Clue.game_id == game_id_param).all()
-        return jsonify([{
+        response = jsonify([{
             "id": c.id,
             "game_id": c.game_id,
             "clue_id": c.clue_id,
@@ -90,6 +90,8 @@ def clues():
             "question": c.question,
             "answer": c.answer
         } for c in clues])
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
 
 
 if __name__ == "__main__":
