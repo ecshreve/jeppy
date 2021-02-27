@@ -1,16 +1,15 @@
 fresh-scrape:
 	rm -rf data/; \
 	mkdir data; \
-	cd jeppy/scraper; \
+	cd scraper; \
 	scrapy crawl games; \
-	cd ../../; \
+	cd ../; \
 	rm -rf backend/data; \
 	mkdir backend/data; \
 	cp data/dump.json backend/data/dump.json
 
 clean:
-	rm -rf jeppy/__pycache__/; \
-	rm -rf jeppy/scrper/scraper/__pycache__/; \
+	rm -rf scraper/scraper/__pycache__/; \
 	rm -rf backend/__pycache__/
 
 run-backend:
