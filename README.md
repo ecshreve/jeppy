@@ -1,19 +1,19 @@
 # jeppy
 
-This is a little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com and dumps the raw data to a json file. 
+This is a little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com, dumps the raw data to a json file, populates a sqlite database with that data, and provides a react app to play jeopardy using the historical games.
 
 _NOTE_:
-The work in progress parts of this project are a Flask app that populates a sqlite database with the json data, and a React app to play a jeopardy game.
+This is a work in progress.
+
+## demo
+
+![jeppy](static/jeppy.gif "jeppy")
 
 ## overview
 
-- `scraper/`: get raw data and dump to json
+- `scraper/`: contains scrapy project to get raw data and dump to json
 - `backend/`: contains flask app to handle db operations
 - `frontend/`: contains react app that fetches data, renders it, and handles gameplay
-
-## work in progress demo
-
-![jeppy](static/jeppy.gif "jeppy")
 
 ## makefile tasks
 
@@ -23,60 +23,24 @@ The work in progress parts of this project are a Flask app that populates a sqli
 - `run-backend`: run the flask app that handles client database queries
 - `run-frontend`: start the react app
 
-## local setup
+## run jeppy locally
 
-_NOTE_: These steps may not be complete, sorry I'll revisit setup instructions in the future when the project is in a more stable place.
+_NOTE_: These steps might be incomplete
 
-### scraper
-
-From the root of the repo run `make scrape`.
-
-### backend
+### Quick Start
 
 ```{bash}
-cd backend                      # move into the backend/ directory
-python -m venv venv             # create a virtual environment
-source ./venv/bin/activate      # activate the virtual environment
-pip install -r requirements.txt # install requirements
+git clone https://github.com/ecshreve/jeppy.git
+cd jeppy
 
-python                          # open a python shell
->>> from app import db          # import the db object from the project
->>> db.create_all()             # run SQLAlchemy's create_all func to create the db and tables
->>> from app import populateDB  # import the helper func to populate the db
->>> populateDB()                # run the populate function
->>> quit()                      # exit the python shell
-
-sqlite3 jeppy.db                    # open the sqlite shell
-sqlite> select count(*) from clue;  # check the number of rows in the clue table
-59                                  # confirm there are rows in the table
-sqlite> .quit                       # exit the sqlite shell
+# I usually run these in two separate terminal windows.
+make run-backend
+make run-frontend
 ```
 
-Validate the flask app handles requests as expected:
+- navigate to `http://localhost:3000` in a browser
 
-- start the flask app
-
-```{bash}
-python app.py  
-```
-
-- in another terminal query for clues for a `game_id`
-
-```{bash}
-curl -G http://localhost:5000/clues --data-urlencode "game_id=Show #8236 - Monday, September 14, 2020"
-```
-
-- this should return json data
-
-### frontend
-
-```{bash}
-cd frontend/client      # move into the client/ directory
-yarn                    # install dependencies
-yarn start              # start the react app
-```
-
-### example json dump for one game
+## example json dump for one game
 
 ```{bash}
 {
