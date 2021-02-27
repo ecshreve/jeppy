@@ -1,0 +1,13 @@
+.progress {
+    flex: 1;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.my-modal {
+    margin-top: 20%;
+}
+
+.my-modal .modal-footer {
+    background-color: lightgreen;
+}

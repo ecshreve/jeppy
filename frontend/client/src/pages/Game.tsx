@@ -1,101 +1,104 @@
 import React, { useEffect, useState } from "react";
+
+import ClueComponent from "../components/clue/ClueComponent";
+import QuestionModal from "../components/question-modal/QuestionModal";
+
 import "./Game.css";
 
 import { Clue, getClues } from "../requests";
 
-import ClueComponent from "../components/clue/ClueComponent";
-import QuestionModal from "../components/question-modal/QuestionModal";
-import AnswerModal from "../components/answer-modal/AnswerModal";
-
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
-		return []
+		return [];
 	}
 
 	// Pull out all categories.
-	let categories: string[] = []
+	let categories: string[] = [];
 	for (let clue of clues) {
 		if (clue.clue_id !== "FJ" && clue.clue_id !== "TB") {
-			categories.push(clue.category)
+			categories.push(clue.category);
 		}
 	}
 
 	// Get unique categories.
-	var unique = categories.filter((value, index, self) => self.indexOf(value) === index);
-	return unique
-}
+	var unique = categories.filter(
+		(value, index, self) => self.indexOf(value) === index
+	);
+	return unique;
+};
 
-const getCategoryToClueListMap = (categories: string[], clues: Clue[] | undefined): Map<string, Clue[]> | null => {
+const getCategoryToClueListMap = (
+	categories: string[],
+	clues: Clue[] | undefined
+): Map<string, Clue[]> | null => {
 	if (clues === undefined) {
-		return null
+		return null;
 	}
 
 	// This is a very not optimal way to do this.
 	let catMap = new Map<string, Clue[]>();
 	for (let cat of categories) {
-		let categoryClues: Clue[] = []
+		let categoryClues: Clue[] = [];
 		for (let clue of clues) {
 			if (clue.category === cat) {
-				categoryClues.push(clue)
+				categoryClues.push(clue);
 			}
 			if (categoryClues.length >= 5) {
-				break
+				break;
 			}
 		}
-		catMap.set(cat, categoryClues)
-
+		catMap.set(cat, categoryClues);
 	}
 	return catMap;
-}
+};
 
-const getEmptyClue = () => {
+const getEmptyClue = (ind: number) => {
 	return (
-		<div className="emptyclue">
+		<div key={ind + 1} className="emptyclue">
 			<p>---</p>
 		</div>
 	);
-}
+};
 
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
-	const [showAnswerModal, setShowAnswerModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 
 	useEffect(() => {
 		getClues().then((result) => setData(result));
 	}, []);
 
-	const categories = getCategories(data)
-	const categoryToClueListMap = getCategoryToClueListMap(categories, data)
+	const categories = getCategories(data);
+	const categoryToClueListMap = getCategoryToClueListMap(categories, data);
 	if (categoryToClueListMap === null) {
-		return (<div></div>)
+		return <div></div>;
 	}
 
 	const handleClickClue = (c: Clue) => {
-		console.log(c);
 		setSelectedClue(c);
 		setShowQuestionModal(true);
-	}
+	};
 
 	const handleHideQuestionModal = () => {
 		setShowQuestionModal(false);
-		setShowAnswerModal(true);
-	}
-
-	const handleHideAnswerModal = () => {
-		setShowAnswerModal(false)
-		setSelectedClue(undefined);
-	}
+	};
 
 	const renderCat = (catName: string, clues: Clue[]) => {
 		let myclues = clues.map((c, ind) => {
-			return <ClueComponent value={200*(ind+1)} clue={c} handleSelect={handleClickClue}/>
-		})
+			return (
+				<ClueComponent
+					key={ind}
+					value={200 * (ind + 1)}
+					clue={c}
+					handleSelect={handleClickClue}
+				/>
+			);
+		});
 		while (myclues.length < 5) {
-			myclues.push(getEmptyClue())
+			myclues.push(getEmptyClue(myclues.length));
 		}
-	
+
 		return (
 			<div className="catcol">
 				<div className="cat">
@@ -116,8 +119,13 @@ export default function Game() {
 				{renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
 				{renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
 			</div>
-			<QuestionModal show={showQuestionModal} handleHide={handleHideQuestionModal} clue={selectedClue}/>
-			<AnswerModal show={showAnswerModal} handleHide={handleHideAnswerModal} clue={selectedClue} />
+			{showQuestionModal && (
+				<QuestionModal
+					show={showQuestionModal}
+					handleHide={handleHideQuestionModal}
+					clue={selectedClue}
+				/>
+			)}
 		</>
 	);
 }
