@@ -1,6 +1,8 @@
 import React from "react";
 import "./Game.css";
 
+import { getClues } from "../requests";
+
 import ClueComponent from "../components/clue/ClueComponent"
 
 const renderCat = (ind: number) => {
@@ -19,6 +21,7 @@ const renderCat = (ind: number) => {
 };
 
 export default function Game() {
+	getClues().then(data => { console.log(data)})
 	return (
 		<div className="flex-grid">
             {renderCat(1)}
