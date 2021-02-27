@@ -20,16 +20,6 @@
     text-align: center;
     align-items: center;
 }
-.clue {
-    flex: 1;
-    background: blue;
-    border: 5px solid black;
-    padding: 5px;
-    
-    display: flex;
-    text-align: center;
-    align-items: center;
-}
 p {
     flex: 1;
 }

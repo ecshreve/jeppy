@@ -1,27 +1,19 @@
 import React from "react";
 import "./Game.css";
 
+import ClueComponent from "../components/clue/ClueComponent"
+
 const renderCat = (ind: number) => {
 	return (
 		<div className="col">
 			<div className="cat">
 				<p>cat {ind}</p>
 			</div>
-			<div className="clue">
-				<p>200</p>
-			</div>
-			<div className="clue">
-				<p>400</p>
-			</div>
-			<div className="clue">
-				<p>600</p>
-			</div>
-			<div className="clue">
-				<p>800</p>
-			</div>
-			<div className="clue">
-				<p>1000</p>
-			</div>
+			<ClueComponent value={200}/>
+			<ClueComponent value={400}/>
+			<ClueComponent value={600}/>
+			<ClueComponent value={800}/>
+			<ClueComponent value={1000}/>
 		</div>
 	);
 };
