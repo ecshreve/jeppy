@@ -1,0 +1,23 @@
+General Improvements:
+    ☐ unit tests and doc comments
+    ☐ redo the Makefile
+    ☐ reorganize the `jeppy/` directory
+    ☐ refactor `backend/` so it isn't just one file
+    ☐ work on local setup instructions for the `README`
+
+Scraping:
+    ☐ `jeppy/scraper` needs some love and cleanup
+    
+QuestionModalComponent:
+    ☐ display question
+    ☐ countdown timer
+    ☐ click or timer expires to show answer
+    ☐ click to close modal
+
+ClueComponent:
+    ☐ click to bring up question modal
+    ☐ gray out clue after modal interaction
+
+Ideas:
+    ☐ landing page to choose a historical game to play or pick categories
+    ☐ scorekeeping?
