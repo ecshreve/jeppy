@@ -1,6 +1,9 @@
 # jeppy
 
-fun little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com and writes them to a sqlite database
+This is a fun little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com and dumps the raw data to a json file. 
+
+_NOTE_:
+The work in progress parts of this project are a Flask app that populates a sqlite database with the json data, and a React app to play a jeopardy game.
 
 ## overview
 
@@ -8,7 +11,20 @@ fun little project that scrapes historical jeopardy questions/answers from https
 - `backend/`: contains flask app to handle db operations
 - `frontend/`: contains react app that fetches data, renders it, and handles gameplay
 
-## setup
+## work in progress demo
+
+![jeppy](static/jeppy.gif "jeppy")
+
+## makefile tasks
+
+- `fresh-scrape`: remove all raw data, scrape and dump to raw data to `dump.json`, copy new `dump.json` to `frontend/client/`
+- `clean`: delete `__pycache__` directories
+- `run-backend`: run the flask app that handles client database queries
+- `run-frontend`: start the react app
+
+## local setup
+
+_NOTE_: These steps may not be complete, sorry I'll revisit setup instructions in the future when the project is in a more stable place.
 
 ### scraper
 
@@ -58,12 +74,6 @@ cd frontend/client      # move into the client/ directory
 yarn                    # install dependencies
 yarn start              # start the react app
 ```
-
-## work in progress demo
-
-`make practice`
-
-![jeppy](static/jeppy.gif "jeppy")
 
 ### example json dump for one game
 

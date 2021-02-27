@@ -1,25 +1,26 @@
-scrape:
+fresh-scrape:
+	rm -rf data/; \
+	mkdir data; \
 	cd jeppy/scraper; \
-	scrapy crawl games
-
-initdb:
-	cd jeppy; \
-	python -m scripts.initdb
-
-dumptodb:
-	cd jeppy; \
-	python -m scripts.dumptodb
-
-practice:
-	cd jeppy; \
-	python -m scripts.practice
+	scrapy crawl games; \
+	cd ../../; \
+	rm -rf backend/data; \
+	mkdir backend/data; \
+	cp data/dump.json backend/data/dump.json
 
 clean:
-	rm -rf data/; \
-	mkdir data
+	rm -rf jeppy/__pycache__/; \
+	rm -rf jeppy/scrper/scraper/__pycache__/; \
+	rm -rf backend/__pycache__/
 
-clean-and-run: clean scrape initdb dumptodb
+run-backend:
+	cd backend; \
+	source ./venv/bin/activate; \
+	pip install -r requirements.txt; \
+	python app.py
 
-run-client:
+run-frontend:
 	cd frontend/client; \
+	yarn; \
 	yarn start
+
