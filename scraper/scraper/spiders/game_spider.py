@@ -44,7 +44,9 @@ class GamesSpider(scrapy.Spider):
         answers_url = response.xpath('//*[@id="final_jeopardy_round"]/h4/a[1]//@href').get()
         yield response.follow(answers_url, self.parse_answers, meta = {'jep_item': jep_item})
 
-        # TODO: uncomment this when we decide on a link following approach.
+        # NOTE: to scrape all games uncomment these two lines and uncomment the 
+        # start_urls above.
+        #
         # for a in response.xpath('//a[contains(text(), "next game")]/@href'):
         #     yield response.follow(a, self.parse)
 

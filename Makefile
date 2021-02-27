@@ -1,11 +1,9 @@
 fresh-scrape:
-	rm -rf data/; \
-	mkdir data; \
+	rm data/dump.json; \
 	cd scraper; \
 	scrapy crawl games; \
 	cd ../; \
-	rm -rf backend/data; \
-	mkdir backend/data; \
+	rm backend/data/dump.json; \
 	cp data/dump.json backend/data/dump.json
 
 clean:
