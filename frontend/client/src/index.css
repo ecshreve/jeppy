@@ -2,12 +2,15 @@ html {
   height: 100%;
 }
 
+@font-face {
+  font-family: 'Korinna';
+  src: url(../src/fonts/KORIN.woff) format('woff');
+}
+
 body {
   margin: 0;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Korinna';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

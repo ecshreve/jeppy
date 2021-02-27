@@ -23,7 +23,10 @@ export default function QuestionModal(props: QuestionModalProps) {
 		if (timerVal >= MAX_TIMER_VAL) {
 			// TODO: figure out the right way to do this. This is a hacky bandaid
 			// to make the answer show up after the progress bar updates.
-			setTimeout(() => setShowAnswer(true), 500);
+			setTimeout(() => {
+				setShowAnswer(true)
+				setTimerOn(false)
+			}, 500);
 		}
 
 		if (timerOn && !showAnswer) {

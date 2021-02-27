@@ -55,7 +55,7 @@ const getCategoryToClueListMap = (
 const getEmptyClue = (ind: number) => {
 	return (
 		<div key={ind + 1} className="emptyclue">
-			<p>---</p>
+			<p> </p>
 		</div>
 	);
 };

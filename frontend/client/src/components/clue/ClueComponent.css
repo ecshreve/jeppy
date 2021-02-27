@@ -1,17 +1,10 @@
 .clue {
     flex: 1;
-    background: blue;
-    border: 5px solid black;
-    padding: 5px;
-    
-    display: flex;
-    text-align: center;
-    align-items: center;
-}
+    background: #031297;
+    font-family: 'Korinna';
+    color: #fcba03;
+    font-size: 3rem;
 
-.clue-disabled {
-    flex: 1;
-    background: gray;
     border: 5px solid black;
     padding: 5px;
     

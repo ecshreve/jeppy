@@ -20,11 +20,11 @@ export default function ClueComponent(props: ClueProps) {
 		<>
 			{selectable ? (
 				<div className="clue" onClick={handleClick}>
-					<p>{props.value}</p>
+					<p>${props.value}</p>
 				</div>
 			) : (
-				<div className="clue-disabled">
-					<p>---</p>
+				<div className="clue">
+					<p> </p>
 				</div>
 			)}
 		</>
