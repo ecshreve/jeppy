@@ -45,17 +45,29 @@ const getCategoryToClueListMap = (categories: string[], clues: Clue[] | undefine
 	}
 	return catMap;
 }
-const renderCat = (catName: string) => {
+
+const getEmptyClue = () => {
+	return (
+		<div className="emptyclue">
+			<p>---</p>
+		</div>
+	);
+}
+
+const renderCat = (catName: string, clues: Clue[]) => {
+	let myclues = clues.map((c, ind) => {
+		return <ClueComponent value={200*(ind+1)} clue={c}/>
+	})
+	while (myclues.length < 5) {
+		myclues.push(getEmptyClue())
+	}
+
 	return (
 		<div className="col">
 			<div className="cat">
 				<p>{catName}</p>
 			</div>
-			<ClueComponent value={200}/>
-			<ClueComponent value={400}/>
-			<ClueComponent value={600}/>
-			<ClueComponent value={800}/>
-			<ClueComponent value={1000}/>
+			{myclues}
 		</div>
 	);
 };
@@ -69,16 +81,18 @@ export default function Game() {
 
 	const categories = getCategories(data)
 	const categoryToClueListMap = getCategoryToClueListMap(categories, data)
-	console.log(categoryToClueListMap)
+	if (categoryToClueListMap === null) {
+		return (<div></div>)
+	}
 
 	return (
 		<div className="flex-grid">
-            {renderCat(categories[0])}
-            {renderCat(categories[1])}
-            {renderCat(categories[2])}
-            {renderCat(categories[3])}
-            {renderCat(categories[4])}
-            {renderCat(categories[5])}
+            {renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
+            {renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
+            {renderCat(categories[2], categoryToClueListMap.get(categories[2])!)}
+            {renderCat(categories[3], categoryToClueListMap.get(categories[3])!)}
+            {renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
+            {renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
 		</div>
 	);
 }
