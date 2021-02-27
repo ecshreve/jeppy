@@ -5,7 +5,7 @@ import { Clue, getClues } from "../requests";
 
 import ClueComponent from "../components/clue/ClueComponent"
 
-const filterClues = (clues: Clue[] | undefined): string[] => {
+const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
 		return []
 	}
@@ -20,9 +20,31 @@ const filterClues = (clues: Clue[] | undefined): string[] => {
 
 	// Get unique categories.
 	var unique = categories.filter((value, index, self) => self.indexOf(value) === index);
-	return unique;
+	return unique
 }
 
+const getCategoryToClueListMap = (categories: string[], clues: Clue[] | undefined): Map<string, Clue[]> | null => {
+	if (clues === undefined) {
+		return null
+	}
+
+	// This is a very not optimal way to do this.
+	let catMap = new Map<string, Clue[]>();
+	for (let cat of categories) {
+		let categoryClues: Clue[] = []
+		for (let clue of clues) {
+			if (clue.category === cat) {
+				categoryClues.push(clue)
+			}
+			if (categoryClues.length >= 5) {
+				break
+			}
+		}
+		catMap.set(cat, categoryClues)
+
+	}
+	return catMap;
+}
 const renderCat = (ind: number) => {
 	return (
 		<div className="col">
@@ -45,8 +67,9 @@ export default function Game() {
 		getClues().then((result) => setData(result));
 	}, []);
 
-	const uniqueCategories = filterClues(data)
-	console.log(uniqueCategories)
+	const categories = getCategories(data)
+	const categoryToClueListMap = getCategoryToClueListMap(categories, data)
+	console.log(categoryToClueListMap)
 
 	return (
 		<div className="flex-grid">
