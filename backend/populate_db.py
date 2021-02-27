@@ -44,7 +44,7 @@ def clean_game_entry(raw_game):
 def populateDB():
     try:
         # Load the JSON file into a dictionary.
-        with open("data/old_dump.json") as infile:
+        with open("../data/dump.json") as infile:
             data = json.load(infile)
 
         for game_entry in data:
