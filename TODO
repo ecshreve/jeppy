@@ -1,5 +1,6 @@
 General Improvements:
     ☐ unit tests and doc comments
+    ☐ need more comments everywhere
     ☐ redo the Makefile
     ☐ reorganize the `jeppy/` directory
     ☐ refactor `backend/` so it isn't just one file
@@ -9,14 +10,14 @@ Scraping:
     ☐ `jeppy/scraper` needs some love and cleanup
     
 QuestionModalComponent:
-    ☐ display question
-    ☐ countdown timer
-    ☐ click or timer expires to show answer
-    ☐ click to close modal
+    ✔ display question @done(21-02-27 05:59)
+    ✔ countdown timer @done(21-02-27 05:59)
+    ✔ click or timer expires to show answer @done(21-02-27 05:59)
+    ✔ click to close modal @done(21-02-27 05:59)
 
 ClueComponent:
-    ☐ click to bring up question modal
-    ☐ gray out clue after modal interaction
+    ✔ click to bring up question modal @done(21-02-27 05:59)
+    ✔ gray out clue after modal interaction @done(21-02-27 05:59)
 
 Ideas:
     ☐ landing page to choose a historical game to play or pick categories

@@ -12,8 +12,8 @@ export default function ClueComponent(props: ClueProps) {
 	const [selectable, setSelectable] = useState(true);
 
 	const handleClick = () => {
-		setSelectable(false)
-		props.handleSelect(props.clue)
+		setSelectable(false);
+		props.handleSelect(props.clue);
 	};
 
 	return (
