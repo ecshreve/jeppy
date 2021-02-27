@@ -42,5 +42,17 @@ def clues():
         return response
 
 
+@app.route("/game_ids", methods=["GET"])
+def game_ids():
+    method = request.method
+    if (method.lower() == "get"):
+        clues = Clue.query.all()
+        game_ids = sorted(set([c.game_id for c in clues]))
+
+        response = jsonify(game_ids)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+
+
 if __name__ == "__main__":
     app.run(debug=True)
