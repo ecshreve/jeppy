@@ -5,6 +5,24 @@ import { Clue, getClues } from "../requests";
 
 import ClueComponent from "../components/clue/ClueComponent"
 
+const filterClues = (clues: Clue[] | undefined): string[] => {
+	if (clues === undefined) {
+		return []
+	}
+
+	// Pull out all categories.
+	let categories: string[] = []
+	for (let clue of clues) {
+		if (clue.clue_id !== "FJ" && clue.clue_id !== "TB") {
+			categories.push(clue.category)
+		}
+	}
+
+	// Get unique categories.
+	var unique = categories.filter((value, index, self) => self.indexOf(value) === index);
+	return unique;
+}
+
 const renderCat = (ind: number) => {
 	return (
 		<div className="col">
@@ -27,7 +45,8 @@ export default function Game() {
 		getClues().then((result) => setData(result));
 	}, []);
 
-	console.log(data)
+	const uniqueCategories = filterClues(data)
+	console.log(uniqueCategories)
 
 	return (
 		<div className="flex-grid">
