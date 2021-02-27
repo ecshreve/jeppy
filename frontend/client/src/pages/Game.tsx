@@ -45,11 +45,11 @@ const getCategoryToClueListMap = (categories: string[], clues: Clue[] | undefine
 	}
 	return catMap;
 }
-const renderCat = (ind: number) => {
+const renderCat = (catName: string) => {
 	return (
 		<div className="col">
 			<div className="cat">
-				<p>cat {ind}</p>
+				<p>{catName}</p>
 			</div>
 			<ClueComponent value={200}/>
 			<ClueComponent value={400}/>
@@ -73,12 +73,12 @@ export default function Game() {
 
 	return (
 		<div className="flex-grid">
-            {renderCat(1)}
-            {renderCat(2)}
-            {renderCat(3)}
-            {renderCat(4)}
-            {renderCat(5)}
-            {renderCat(6)}
+            {renderCat(categories[0])}
+            {renderCat(categories[1])}
+            {renderCat(categories[2])}
+            {renderCat(categories[3])}
+            {renderCat(categories[4])}
+            {renderCat(categories[5])}
 		</div>
 	);
 }
