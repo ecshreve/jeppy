@@ -56,7 +56,7 @@ const getEmptyClue = () => {
 
 const renderCat = (catName: string, clues: Clue[]) => {
 	let myclues = clues.map((c, ind) => {
-		return <ClueComponent value={200*(ind+1)} clue={c}/>
+		return <ClueComponent value={200*(ind+1)} clue={c} handleClick={handleClickClue}/>
 	})
 	while (myclues.length < 5) {
 		myclues.push(getEmptyClue())
@@ -71,6 +71,11 @@ const renderCat = (catName: string, clues: Clue[]) => {
 		</div>
 	);
 };
+
+const handleClickClue = (question: string) => {
+	console.log(question);
+    alert(question)
+}
 
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
