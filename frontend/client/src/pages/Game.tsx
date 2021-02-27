@@ -5,6 +5,7 @@ import { Clue, getClues } from "../requests";
 
 import ClueComponent from "../components/clue/ClueComponent";
 import QuestionModal from "../components/question-modal/QuestionModal";
+import AnswerModal from "../components/answer-modal/AnswerModal";
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -57,7 +58,8 @@ const getEmptyClue = () => {
 
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
-	const [showModal, setShowModal] = useState(false);
+	const [showQuestionModal, setShowQuestionModal] = useState(false);
+	const [showAnswerModal, setShowAnswerModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 
 	useEffect(() => {
@@ -73,11 +75,16 @@ export default function Game() {
 	const handleClickClue = (c: Clue) => {
 		console.log(c);
 		setSelectedClue(c);
-		setShowModal(true);
+		setShowQuestionModal(true);
 	}
 
-	const handleHideClueModal = () => {
-		setShowModal(false);
+	const handleHideQuestionModal = () => {
+		setShowQuestionModal(false);
+		setShowAnswerModal(true);
+	}
+
+	const handleHideAnswerModal = () => {
+		setShowAnswerModal(false)
 		setSelectedClue(undefined);
 	}
 
@@ -109,7 +116,8 @@ export default function Game() {
 				{renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
 				{renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
 			</div>
-			<QuestionModal show={showModal} handleHide={handleHideClueModal} clue={selectedClue}/>
+			<QuestionModal show={showQuestionModal} handleHide={handleHideQuestionModal} clue={selectedClue}/>
+			<AnswerModal show={showAnswerModal} handleHide={handleHideAnswerModal} clue={selectedClue} />
 		</>
 	);
 }
