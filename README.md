@@ -2,21 +2,68 @@
 
 fun little project that scrapes historical jeopardy questions/answers from https://www.j-archive.com and writes them to a sqlite database
 
+## overview
+
+- `jeppy/scraper`: get raw data and dump to json
+- `backend/`: contains flask app to handle db operations
+- `frontend/`: contains react app that fetches data, renders it, and handles gameplay
+
+## setup
+
+### scraper
+
+From the root of the repo run `make scrape`.
+
+### backend
+
+```{bash}
+cd backend                      # move into the backend/ directory
+python -m venv venv             # create a virtual environment
+source ./venv/bin/activate      # activate the virtual environment
+pip install -r requirements.txt # install requirements
+
+python                          # open a python shell
+>>> from app import db          # import the db object from the project
+>>> db.create_all()             # run SQLAlchemy's create_all func to create the db and tables
+>>> from app import populateDB  # import the helper func to populate the db
+>>> populateDB()                # run the populate function
+>>> quit()                      # exit the python shell
+
+sqlite3 jeppy.db                    # open the sqlite shell
+sqlite> select count(*) from clue;  # check the number of rows in the clue table
+59                                  # confirm there are rows in the table
+sqlite> .quit                       # exit the sqlite shell
+```
+
+Validate the flask app handles requests as expected:
+
+- start the flask app
+
+```{bash}
+python app.py  
+```
+
+- in another terminal query for clues for a `game_id`
+
+```{bash}
+curl -G http://localhost:5000/clues --data-urlencode "game_id=Show #8236 - Monday, September 14, 2020"
+```
+
+- this should return json data
+
+### frontend
+
+```{bash}
+cd frontend/client      # move into the client/ directory
+yarn                    # install dependencies
+yarn start              # start the react app
+```
+
 ## work in progress demo
 
 `make practice`
 
 ![jeppy](static/jeppy.gif "jeppy")
-
-### makefile commands
-
-- `make scrape`: run the scraper and write output to a `data/dump.json`
-- `make initdb`: create tables in the sqlite db
-- `make dumptodb`: populate the sqlite db with data from the `dump.json` file
-- `make practice`: run the simple practice game loop
-- `make clean`: remove contents of the `data/` directory
-- `make clean-and-run`: remove contents of `data/` and then run all the necessary tasks to rebuild and populate the sqlite db
-- `make run-client`: run the flask app
 
 ### example json dump for one game
 
