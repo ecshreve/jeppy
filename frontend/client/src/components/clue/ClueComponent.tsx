@@ -5,12 +5,12 @@ import { Clue } from "../../requests";
 type ClueProps = {
 	value: number;
 	clue: Clue;
-	handleClick: (question: string) => void
+	handleClick: (c: Clue) => void
 };
 
 export default function ClueComponent(props: ClueProps) {
 	return (
-		<div className="clue" onClick={() => props.handleClick(props.clue.question)}>
+		<div className="clue" onClick={() => props.handleClick(props.clue)}>
 			<p>{props.value}</p>
 		</div>
 	);
