@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Game.css";
 
-import { getClues } from "../requests";
+import { Clue, getClues } from "../requests";
 
 import ClueComponent from "../components/clue/ClueComponent"
 
@@ -21,7 +21,14 @@ const renderCat = (ind: number) => {
 };
 
 export default function Game() {
-	getClues().then(data => { console.log(data)})
+	const [data, setData] = useState<Clue[]>();
+
+	useEffect(() => {
+		getClues().then((result) => setData(result));
+	}, []);
+
+	console.log(data)
+
 	return (
 		<div className="flex-grid">
             {renderCat(1)}

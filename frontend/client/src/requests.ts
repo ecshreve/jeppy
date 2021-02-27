@@ -1,4 +1,4 @@
-class Clue {
+export class Clue {
 	id: number;
 	game_id: string;
 	clue_id: string;
@@ -24,7 +24,7 @@ class Clue {
 }
 const APIURL = "http://localhost:5000";
 
-export const getClues = async (): Promise<Clue> => {
+export const getClues = async (): Promise<Clue[]> => {
 	const param = "Show #8236 - Monday, September 14, 2020";
 	return fetch(
 		`${APIURL}/clues?game_id=${encodeURIComponent(param)}`
