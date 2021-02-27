@@ -90,7 +90,7 @@ export default function Game() {
 
 	const renderCat = (catName: string, clues: Clue[]) => {
 		let myclues = clues.map((c, ind) => {
-			return <ClueComponent value={200*(ind+1)} clue={c} handleClick={handleClickClue}/>
+			return <ClueComponent value={200*(ind+1)} clue={c} handleSelect={handleClickClue}/>
 		})
 		while (myclues.length < 5) {
 			myclues.push(getEmptyClue())

@@ -8,3 +8,14 @@
     text-align: center;
     align-items: center;
 }
+
+.clue-disabled {
+    flex: 1;
+    background: gray;
+    border: 5px solid black;
+    padding: 5px;
+    
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
