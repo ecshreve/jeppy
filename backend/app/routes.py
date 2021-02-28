@@ -1,7 +1,10 @@
+'''Provides handlers for api endpoints.'''
+
 from flask import request, jsonify
 
 from app import app
 from app.models import Clue
+
 
 @app.route("/clues", methods=["GET"])
 def clues():
