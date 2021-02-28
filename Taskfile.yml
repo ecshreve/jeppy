@@ -64,7 +64,7 @@ tasks:
     summary: |
       Removes old data from scraping and
       clears all caches.
-    cmd:
+    cmds:
       - rm data/dump.json
       - rm backend/data/dump.json
       - rm -rf scraper/scraper/__pycache__/
