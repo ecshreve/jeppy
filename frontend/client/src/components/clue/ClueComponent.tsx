@@ -23,7 +23,7 @@ export default function ClueComponent(props: ClueProps) {
 					<p>${props.value}</p>
 				</div>
 			) : (
-				<div className="clue">
+				<div className="clue-disabled">
 					<p> </p>
 				</div>
 			)}
