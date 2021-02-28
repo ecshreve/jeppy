@@ -32,10 +32,10 @@ tasks:
 
   serve:frontend:
     desc: "Serve React UI"
-    dir: frontend
+    dir: frontend/client
     preconditions:
       - sh: "[ -f package.json ]"
-        msg: "Missing frontend/package.json"
+        msg: "Missing frontend/client/package.json"
     cmds:
       - yarn
       - yarn start
