@@ -5,6 +5,7 @@ General Improvements:
     ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21)
     ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21)
     ☐ work on local setup instructions for the `README`
+    ☐ cache JSON in local storage (or something) so the board doesn't clear on refresh 
 
 Database:
     ☐ split the `game_id` column into two columns (id and date)
