@@ -1,5 +1,6 @@
 from app import db
 
+
 class Clue(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     game_id = db.Column(db.String(255))
@@ -14,3 +15,13 @@ class Clue(db.Model):
         self.category = category
         self.question = question
         self.answer = answer
+
+    def __repr__(self):
+        ret = ""
+        ret += ("game_id: " + self.game_id + "\n")
+        ret += ("clue_id: " + self.clue_id + "\n")
+        ret += ("category: " + self.category + "\n")
+        ret += ("question: " + self.question + "\n")
+        ret += ("answer: " + self.answer + "\n")
+
+        return ret
