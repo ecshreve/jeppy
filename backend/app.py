@@ -44,12 +44,22 @@ def clues():
 
 @app.route("/game_ids", methods=["GET"])
 def game_ids():
+    year_param = request.args.get("year")
+    month_param = request.args.get("month")
+
     method = request.method
     if (method.lower() == "get"):
         clues = Clue.query.all()
         game_ids = sorted(set([c.game_id for c in clues]))
 
-        response = jsonify(game_ids)
+        filtered_by_year = list(filter(
+            lambda x: year_param in x,
+            game_ids)) if year_param is not None else game_ids
+        filtered_by_month = list(filter(
+            lambda x: month_param in x,
+            filtered_by_year)) if month_param is not None else filtered_by_year
+
+        response = jsonify(filtered_by_month)
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
 

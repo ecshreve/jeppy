@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ClueComponent from "../components/clue/ClueComponent";
 import QuestionModal from "../components/question-modal/QuestionModal";
+import Menu from "../components/menu/Menu";
 
 import "./Game.css";
 
@@ -60,13 +61,19 @@ const getEmptyClue = (ind: number) => {
 	);
 };
 
-export default function Game() {
+type gameProps = {
+	gameId: string;
+};
+
+export default function Game(props: gameProps) {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 
 	useEffect(() => {
-		getClues().then((result) => setData(result));
+		getClues(props.gameId).then((result) => {
+			setData(result);
+		});
 	}, []);
 
 	const categories = getCategories(data);
@@ -119,6 +126,7 @@ export default function Game() {
 				{renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
 				{renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
 			</div>
+			)
 			{showQuestionModal && (
 				<QuestionModal
 					show={showQuestionModal}

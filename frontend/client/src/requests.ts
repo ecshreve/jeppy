@@ -24,9 +24,13 @@ export class Clue {
 }
 const APIURL = "http://localhost:5000";
 
-export const getClues = async (): Promise<Clue[]> => {
-	const param = "Show #8236 - Monday, September 14, 2020";
+export const getClues = async (gameId: string): Promise<Clue[]> => {
+	//const param = "Show #8236 - Monday, September 14, 2020";
 	return fetch(
-		`${APIURL}/clues?game_id=${encodeURIComponent(param)}`
+		`${APIURL}/clues?game_id=${encodeURIComponent(gameId)}`
 	).then((res) => res.json());
+};
+
+export const getAllGameIds = async () => {
+	return fetch(`${APIURL}/game_ids`).then((res) => res.json());
 };

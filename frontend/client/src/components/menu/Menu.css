@@ -1,0 +1,13 @@
+.menu-container {
+	display: flex;
+	justify-content: center;
+	margin: 25px;
+}
+
+.menu-form {
+	width: 50%;
+}
+
+.my-button {
+	margin-top: 20px;
+}
