@@ -20,7 +20,7 @@ historical games.
 Get started with development of jeppy by cloning the project
 and serving the application locally.
 
-## Configuration
+### Configuration
 
 Some basic configuration constants currently live in `frontend/client/src/consts.ts`.
 We'll probably want to do configuration like this differently in the future but
@@ -57,7 +57,18 @@ can [install Task here](https://taskfile.dev/#/installation). Task is a simple a
 * serve:                Serve UI and server
 * serve:backend:        Serve backend Python app
 * serve:frontend:       Serve React UI
+* migrate:              Create and apply db migration
 ```
+
+## Backend
+
+The `backend/` directory contains a Flask app to manage client communication with the database.
+
+### Database Migrations
+
+This project uses [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/#) to manage 
+database migrations. After making a schema change in the application run `task migrate` to
+apply the schema change to the database.
 
 ### Example game JSON
 

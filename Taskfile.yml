@@ -68,3 +68,18 @@ tasks:
     cmds:
       - rm -rf scraper/scraper/__pycache__/
       - rm -rf backend/__pycache__/
+
+  migrate:
+    desc: "Create and apply a new migration to the db"
+    dir: backend
+    summary: |
+      This task should be run anytime a change to the db schema
+      is made
+
+      If this task fails you may need to run the migrate 
+      command first and review the generate migration script
+      in migrations/versions before applying it to the db.
+    cmds:
+      - cmd: test -f jeppy.db && flask db migrate
+        ignore_error: true
+      - flask db upgrade
