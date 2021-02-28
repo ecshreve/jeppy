@@ -1,3 +1,5 @@
+'''Provides definitions for database models.'''
+
 from app import db
 
 
