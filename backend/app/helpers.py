@@ -1,3 +1,5 @@
+'''Provides miscellaneous helper functions for the application.'''
+
 from app.models import Clue
 
 
@@ -38,6 +40,8 @@ def clean_game_entry(raw_game):
 
 # TODO: input validation
 def parse_raw_game_id(raw_game_id):
+    '''Takes in a game_id and returns a tuple containing the id and date.'''
+
     tmp_split = raw_game_id.split(" - ")
 
     gid = tmp_split[0][6:]
