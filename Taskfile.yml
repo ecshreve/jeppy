@@ -1,0 +1,71 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: scrape
+      - task: serve
+
+  serve:
+    desc: "Serve UI and server"
+    summary: |
+      Serve the UI and server
+
+      Runs the backend python application
+      and serve the frontend react client.
+    cmd:
+      - task: serve:backend
+      - task: serve:frontend
+
+  serve:backend:
+    desc: "Serve backend Python app"
+    dir: backend
+    preconditions:
+      - sh: "[ -f requirements.txt ]"
+        msg: "Missing backend/requirements.txt"
+      - sh: "[ -d venv ]"
+        msg: "Missing backend/venv"
+    cmds:
+      - source venv/bin/activate
+      - pip3 install -r requirements.txt
+      - python3 populate_db.py
+
+  serve:frontend:
+    desc: "Serve React UI"
+    dir: frontend
+    preconditions:
+      - sh: "[ -f package.json ]"
+        msg: "Missing frontend/package.json"
+    cmds:
+      - yarn
+      - yarn start
+
+  scrape:
+    desc: "Gather new jeopardy data"
+    summary: |
+      Gather all new jeopardy data
+
+      Cleans out all of the old data and
+      runs a new scraping session to get new
+      questions.
+    dir: scraper
+    deps: [ clean ]
+    cmds:
+      - scrapy crawl games
+      - task: scrape:copy
+
+  scrape:copy:
+    cmds:
+      - cp data/dump.json backend/data/dump.json
+
+  refresh:
+    desc: "Clean out the project"
+    summary: |
+      Removes old data from scraping and
+      clears all caches.
+    cmd:
+      - rm data/dump.json
+      - rm backend/data/dump.json
+      - rm -rf scraper/scraper/__pycache__/
+      - rm -rf backend/__pycache__/
+
