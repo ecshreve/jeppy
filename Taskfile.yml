@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 tasks:
   default:
@@ -29,6 +29,7 @@ tasks:
       - source venv/bin/activate
       - pip3 install -r requirements.txt
       - python3 populate_db.py
+      - python3 app.py
 
   serve:frontend:
     desc: "Serve React UI"
@@ -49,7 +50,7 @@ tasks:
       runs a new scraping session to get new
       questions.
     dir: scraper
-    deps: [ refresh ]
+    deps: [refresh]
     cmds:
       - scrapy crawl games
       - task: scrape:copy
@@ -68,4 +69,3 @@ tasks:
       - rm backend/data/dump.json
       - rm -rf scraper/scraper/__pycache__/
       - rm -rf backend/__pycache__/
-
