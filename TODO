@@ -1,3 +1,6 @@
+Bugs:
+    ☐ something wonky is going on with formatting in the readme: `MD010/no-hard-tabs: Hard tabs [Column: 1]`
+
 General Improvements:
     ☐ unit tests and doc comments
     ☐ need more comments everywhere
@@ -5,7 +8,8 @@ General Improvements:
     ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21)
     ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21)
     ☐ work on local setup instructions for the `README`
-    ☐ cache JSON in local storage (or something) so the board doesn't clear on refresh 
+    ☐ cache JSON in local storage (or something) so the board doesn't clear on refresh
+    ☐ come up with a better way to handle the config constants in `consts.ts` 
 
 Database:
     ☐ split the `game_id` column into two columns (id and date)
