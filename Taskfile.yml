@@ -1,5 +1,7 @@
 version: "3"
 
+output: prefixed
+
 tasks:
   default:
     cmds:
@@ -28,7 +30,8 @@ tasks:
     cmds:
       - source venv/bin/activate
       - pip3 install -r requirements.txt
-      - python3 populate_db.py
+      - task: db:migrate
+      - task: db:populate
       - export FLASK_APP=backend.py
       - flask run
 
@@ -69,7 +72,21 @@ tasks:
       - rm -rf scraper/scraper/__pycache__/
       - rm -rf backend/__pycache__/
 
-  migrate:
+  db:populate:
+    desc: "Load data from data/dump.json into the db"
+    summary: |
+      This task uses the sources/generates pattern so we 
+      don't try to populate the db if the dump.json file hasn't changed.
+      This really only needs to be run once after the db is created.
+    dir: backend
+    cmds:
+      - python3 populate_db.py
+    sources:
+      - ../data/dump.json
+    generates:
+      - jeppy.db
+
+  db:migrate:
     desc: "Create and apply a new migration to the db"
     dir: backend
     summary: |
