@@ -49,7 +49,7 @@ tasks:
       runs a new scraping session to get new
       questions.
     dir: scraper
-    deps: [ clean ]
+    deps: [ refresh ]
     cmds:
       - scrapy crawl games
       - task: scrape:copy
