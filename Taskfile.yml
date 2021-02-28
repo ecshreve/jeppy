@@ -8,14 +8,14 @@ tasks:
 
   serve:
     desc: "Serve UI and server"
+    deps: [ serve:backend, serve:frontend ]
     summary: |
       Serve the UI and server
 
       Runs the backend python application
       and serve the frontend react client.
     cmds:
-      - task: serve:backend
-      - task: serve:frontend
+      - echo "Serving application"
 
   serve:backend:
     desc: "Serve backend Python app"
