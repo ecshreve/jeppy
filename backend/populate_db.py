@@ -1,8 +1,7 @@
 import json
-import os
 
 from app import db
-from app import Clue
+from app.models import Clue
 
 
 def clean_game_entry(raw_game):
@@ -40,54 +39,24 @@ def clean_game_entry(raw_game):
 
     return clues
 
-
-def populateDB():
-    try:
-        # Load the JSON file into a dictionary.
-        with open("../data/dump.json") as infile:
-            data = json.load(infile)
-
-        for game_entry in data:
-            clean_clues = clean_game_entry(game_entry)
-            for c in clean_clues:
-                db.session.add(c)
-        db.session.commit()
-    except Exception as e:
-        print(e)
-
+try:
+    num_rows_deleted = db.session.query(Clue).delete()
+    print(num_rows_deleted)
+    db.session.commit()
+except Exception as e:
+    print(e)
+    db.session.rollback()
 
 try:
-    # If a db file already exists then we're going to rename it temporarily, then remove
-    # it after the db is populated with the new data. If populating with the new data is
-    # unsuccessful then we can fallback to old version.
-    db_already_exists = False
-    if os.path.exists("jeppy.db"):
-        db_already_exists = True
-        os.rename("jeppy.db", "old_jeppy.db")
+    # Load the JSON file into a dictionary.
+    with open("../data/dump.json") as infile:
+        data = json.load(infile)
 
-    # Create the database and table(s).
-    db.create_all()
-
-    # Populate the database with data from the dump.json file.
-    populateDB()
+    for game_entry in data:
+        clean_clues = clean_game_entry(game_entry)
+        for c in clean_clues:
+            db.session.add(c)
+    db.session.commit()
 except Exception as e:
-    print("error populating db")
     print(e)
-
-    if db_already_exists:
-        print("...")
-        print("reverting to previous db version")
-
-        # If there's a new db file then remove it.
-        if os.path.exists("jeppy.db"):
-            os.remove("jeppy.db")
-        
-        # Rename the old db file to correct filename.
-        os.rename("old_jeppy.db", "jeppy.db")
-        print("done reverting db")
-else:
-    if db_already_exists:
-        os.remove("old_jeppy.db")
-    print("successfully populated db")
-
-
+    db.session.rollback()
