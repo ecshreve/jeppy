@@ -13,7 +13,7 @@ tasks:
 
       Runs the backend python application
       and serve the frontend react client.
-    cmd:
+    cmds:
       - task: serve:backend
       - task: serve:frontend
 
@@ -50,7 +50,7 @@ tasks:
       runs a new scraping session to get new
       questions.
     dir: scraper
-    deps: [refresh]
+    deps: [ refresh ]
     cmds:
       - scrapy crawl games
       - task: scrape:copy
