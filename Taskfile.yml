@@ -29,7 +29,8 @@ tasks:
       - source venv/bin/activate
       - pip3 install -r requirements.txt
       - python3 populate_db.py
-      - python3 app.py
+      - export FLASK_APP=backend.py
+      - flask run
 
   serve:frontend:
     desc: "Serve React UI"
@@ -65,7 +66,5 @@ tasks:
       Removes old data from scraping and
       clears all caches.
     cmds:
-      - rm data/dump.json
-      - rm backend/data/dump.json
       - rm -rf scraper/scraper/__pycache__/
       - rm -rf backend/__pycache__/
