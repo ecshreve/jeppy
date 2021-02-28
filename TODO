@@ -4,19 +4,16 @@ Bugs:
 General Improvements:
     ☐ unit tests and doc comments
     ☐ need more comments everywhere
-    ☐ redo the Makefile
+    ✔ redo the Makefile @done(21-02-27 18:21)
     ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21)
     ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21)
-    ☐ work on local setup instructions for the `README`
+    ✔ work on local setup instructions for the `README` @done(21-02-27 18:21)
     ☐ cache JSON in local storage (or something) so the board doesn't clear on refresh
     ☐ come up with a better way to handle the config constants in `consts.ts` 
 
 Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
-
-Landing Page:
-    ☐ allow user to pick a specific game or select "random"
 
 Scraping:
     ✔ `jeppy/scraper` needs some love and cleanup @done(21-02-27 09:15)
@@ -32,6 +29,6 @@ ClueComponent:
     ✔ gray out clue after modal interaction @done(21-02-27 05:59)
 
 Ideas:
-    ☐ landing page to choose a historical game to play or pick categories
+    ☐ landing page to choose a historical game to play or pick categories?
     ☐ scorekeeping?
     ☐ practice mode
