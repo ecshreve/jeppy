@@ -9,10 +9,13 @@ type ClueProps = {
 };
 
 export default function ClueComponent(props: ClueProps) {
-	const [selectable, setSelectable] = useState(true);
+	const [selectable, setSelectable] = useState(
+		localStorage.getItem(props.clue.clue_id) == null
+	);
 
 	const handleClick = () => {
 		setSelectable(false);
+		localStorage.setItem(props.clue.clue_id, "true");
 		props.handleSelect(props.clue);
 	};
 
