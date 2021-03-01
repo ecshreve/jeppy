@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+
 import "./ClueComponent.css";
+
 import { Clue } from "../../requests";
 
 type ClueProps = {
