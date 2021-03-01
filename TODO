@@ -14,6 +14,11 @@ General Improvements:
 Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
+    ✔ add `custom_clue` table to store user created clues @done(21-03-01 00:07)
+
+Backend: 
+    ☐ implement custom error handlers
+    ☐ add support for building a custom game
 
 Scraping:
     ✔ `jeppy/scraper` needs some love and cleanup @done(21-02-27 09:15)

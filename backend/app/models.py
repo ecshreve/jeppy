@@ -27,3 +27,23 @@ class Clue(db.Model):
         ret += ("answer: " + self.answer + "\n")
 
         return ret
+
+
+class CustomClue(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    category = db.Column(db.String(255))
+    question = db.Column(db.String(255))
+    answer = db.Column(db.String(255))
+
+    def __init__(self, category, question, answer):
+        self.category = category.upper()
+        self.question = question
+        self.answer = answer
+
+    def __repr__(self):
+        ret = ""
+        ret += ("category: " + self.category + "\n")
+        ret += ("question: " + self.question + "\n")
+        ret += ("answer: " + self.answer + "\n")
+
+        return ret
