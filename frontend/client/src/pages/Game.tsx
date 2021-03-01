@@ -8,6 +8,7 @@ import "./Game.css";
 
 import { Clue, getClues, getGameIds } from "../requests";
 import { DEVELOPMENT_GAME_ID } from "../consts";
+import { ENV_BUILD_TIME } from "../App";
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -62,18 +63,24 @@ const getEmptyClue = (ind: number) => {
 	);
 };
 
+const getInitialGameId = (): string => {
+	const cachedGameId = localStorage.getItem("game_id");
+	return cachedGameId != null ? cachedGameId : DEVELOPMENT_GAME_ID;
+};
+
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
-	const [currentGameId, setCurrentGameId] = useState(DEVELOPMENT_GAME_ID);
+	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
 
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
 		if (allGameIds.length <= 0) {
 			getGameIds().then((result) => setAllGameIds(result));
 		}
+		localStorage.setItem("game_id", currentGameId);
 	}, [currentGameId]);
 
 	const categories = getCategories(data);
@@ -92,6 +99,10 @@ export default function Game() {
 	};
 
 	const handleClickNewGame = () => {
+		// Clear local storage but persist the envBuildTime.
+		localStorage.clear();
+		localStorage.setItem("build_time", ENV_BUILD_TIME);
+
 		const random = Math.floor(Math.random() * allGameIds.length);
 		setCurrentGameId(allGameIds[random]);
 	};
