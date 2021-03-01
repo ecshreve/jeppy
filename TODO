@@ -11,18 +11,16 @@ Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
 
-Gameplay Controls:
-    ✔ add status bar @done(21-03-01 05:22)
-    ✔ add button to start a new game @done(21-03-01 05:22)
-    ✔ keep current game in cache and don't clear on page reload @done(21-03-01 05:22)
-    ☐ add ability to restart current game
-
 Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
     ☐ scorekeeping?
     ☐ practice mode
 
 Archive:
+  ✔ add status bar @done(21-03-01 05:22) @project(Gameplay Controls)
+  ✔ add button to start a new game @done(21-03-01 05:22) @project(Gameplay Controls)
+  ✔ keep current game in cache and don't clear on page reload @done(21-03-01 05:22) @project(Gameplay Controls)
+  ✔ add ability to restart current game @done(21-03-01 06:20) @project(Gameplay Controls)
   ✔ redo the Makefile @done(21-02-27 18:21) @project(General Improvements)
   ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21) @project(General Improvements)
   ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21) @project(General Improvements)
