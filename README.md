@@ -7,7 +7,7 @@ historical games.
 > _NOTE_:
 > This is a work in progress.
 
-![jeppy](static/jeppy.gif "jeppy")
+![jeppy](static/demo.gif "jeppy")
 
 ## Overview
 
