@@ -1,6 +1,6 @@
 Bugs:
     ☐ something wonky is going on with formatting in the readme: `MD010/no-hard-tabs: Hard tabs [Column: 1]`
-    ☐ something wonky with the bottom margin of text in the buttons and clues
+    ☐ something wonky with the bottom margin of text in the buttons and clues (hacky solution in place)
 
 General Improvements:
     ☐ unit tests and doc comments
