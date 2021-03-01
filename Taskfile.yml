@@ -2,6 +2,9 @@ version: "3"
 
 output: prefixed
 
+env:
+  REACT_APP_BUILD_TIME: $(date +"%T")
+
 tasks:
   default:
     cmds:
@@ -42,6 +45,7 @@ tasks:
       - sh: "[ -f package.json ]"
         msg: "Missing frontend/client/package.json"
     cmds:
+      - echo "build_time" $REACT_APP_BUILD_TIME
       - yarn
       - yarn start
 
