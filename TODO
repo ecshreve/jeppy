@@ -11,9 +11,10 @@ Database:
     ☐ add a `game` table to keep track of game level stats / things
 
 Gameplay Controls:
-    ☐ add status bar
-    ☐ add button to start a new game
-    ☐ keep current game in cache and don't clear on page reload
+    ✔ add status bar @done(21-03-01 05:22)
+    ✔ add button to start a new game @done(21-03-01 05:22)
+    ✔ keep current game in cache and don't clear on page reload @done(21-03-01 05:22)
+    ☐ add ability to restart current game
 
 Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
