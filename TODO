@@ -4,31 +4,31 @@ Bugs:
 General Improvements:
     ☐ unit tests and doc comments
     ☐ need more comments everywhere
-    ✔ redo the Makefile @done(21-02-27 18:21)
-    ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21)
-    ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21)
-    ✔ work on local setup instructions for the `README` @done(21-02-27 18:21)
-    ☐ cache JSON in local storage (or something) so the board doesn't clear on refresh
     ☐ come up with a better way to handle the config constants in `consts.ts` 
 
 Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
 
-Scraping:
-    ✔ `jeppy/scraper` needs some love and cleanup @done(21-02-27 09:15)
-    
-QuestionModalComponent:
-    ✔ display question @done(21-02-27 05:59)
-    ✔ countdown timer @done(21-02-27 05:59)
-    ✔ click or timer expires to show answer @done(21-02-27 05:59)
-    ✔ click to close modal @done(21-02-27 05:59)
-
-ClueComponent:
-    ✔ click to bring up question modal @done(21-02-27 05:59)
-    ✔ gray out clue after modal interaction @done(21-02-27 05:59)
+Gameplay Controls:
+    ☐ add status bar
+    ☐ add button to start a new game
+    ☐ keep current game in cache and don't clear on page reload
 
 Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
     ☐ scorekeeping?
     ☐ practice mode
+
+Archive:
+  ✔ redo the Makefile @done(21-02-27 18:21) @project(General Improvements)
+  ✔ reorganize the `jeppy/` directory @done(21-02-27 09:21) @project(General Improvements)
+  ✔ refactor `backend/` so it isn't just one file @done(21-02-27 09:21) @project(General Improvements)
+  ✔ work on local setup instructions for the `README` @done(21-02-27 18:21) @project(General Improvements)
+  ✔ `jeppy/scraper` needs some love and cleanup @done(21-02-27 09:15) @project(Scraping)
+  ✔ display question @done(21-02-27 05:59) @project(QuestionModalComponent)
+  ✔ countdown timer @done(21-02-27 05:59) @project(QuestionModalComponent)
+  ✔ click or timer expires to show answer @done(21-02-27 05:59) @project(QuestionModalComponent)
+  ✔ click to close modal @done(21-02-27 05:59) @project(QuestionModalComponent)
+  ✔ click to bring up question modal @done(21-02-27 05:59) @project(ClueComponent)
+  ✔ gray out clue after modal interaction @done(21-02-27 05:59) @project(ClueComponent)
