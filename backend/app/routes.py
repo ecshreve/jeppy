@@ -22,3 +22,13 @@ def clues():
         } for c in clues])
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
+
+
+@app.route("/game_ids", methods=["GET"])
+def game_ids():
+    '''Fetch all unique game_ids from the db.'''
+
+    game_ids = Clue.query.with_entities(Clue.game_id).distinct().all()
+    response = jsonify([game_id[0] for game_id in game_ids])
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
