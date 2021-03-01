@@ -98,6 +98,16 @@ export default function Game() {
 		setShowQuestionModal(false);
 	};
 
+	const handleClickRestart = () => {
+		// Clear local storage but persist the current game_id and envBuildTime.
+		localStorage.clear();
+		localStorage.setItem("game_id", currentGameId)
+		localStorage.setItem("build_time", ENV_BUILD_TIME);
+
+		// Reload the page to trigger the Clues to re-render.
+		window.location.reload()
+	};
+
 	const handleClickNewGame = () => {
 		// Clear local storage but persist the envBuildTime.
 		localStorage.clear();
@@ -137,6 +147,7 @@ export default function Game() {
 			<div className="game-container">
 				<StatusBar
 					game_id={currentGameId}
+					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
 				<div className="flex-grid">
