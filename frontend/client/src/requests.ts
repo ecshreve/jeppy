@@ -24,9 +24,9 @@ export class Clue {
 }
 const APIURL = "http://localhost:5000";
 
-export const getClues = async (game_id: string): Promise<Clue[]> => {
+export const getClues = async (gameId: string): Promise<Clue[]> => {
 	return fetch(
-		`${APIURL}/clues?game_id=${encodeURIComponent(game_id)}`
+		`${APIURL}/clues?game_id=${encodeURIComponent(gameId)}`
 	).then((res) => res.json());
 };
 
