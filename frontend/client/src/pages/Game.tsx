@@ -34,9 +34,9 @@ const getCategories = (clues: Clue[] | undefined): string[] => {
 const getCategoryToClueListMap = (
 	categories: string[],
 	clues: Clue[] | undefined
-): Map<string, Clue[]> | null => {
+): Map<string, Clue[]> => {
 	if (clues === undefined) {
-		return null;
+		return new Map<string, Clue[]>();
 	}
 
 	// This is a very not optimal way to do this.
@@ -64,83 +64,131 @@ const getEmptyClue = (ind: number) => {
 	);
 };
 
-const getInitialGameId = (): string => {
-	const cachedGameId = localStorage.getItem("game_id");
-	return cachedGameId != null ? cachedGameId : DEVELOPMENT_GAME_ID;
+const getNumSingleJepClues = (clues: Clue[] | undefined): number => {
+	if (clues === undefined) {
+		return 0;
+	}
+
+	const singleJep = clues.filter((clue) => {
+		return clue.clue_id[0] === "J";
+	});
+
+	return singleJep.length;
 };
 
 type GameProps = {
 	numPlayers: number;
 };
 
+type GameState = {
+	data: Clue[] | undefined;
+	categories: string[];
+	currentGameId: string;
+	selectedClue: Clue | undefined;
+	selectedClueValue: number;
+	showQuestionModal: boolean;
+	numSingleJClues: number;
+	playerScores: number[];
+};
+
+const getInitialGameState = (numPlayers: number): GameState => {
+	return {
+		data: undefined,
+		categories: [],
+		currentGameId: DEVELOPMENT_GAME_ID,
+		selectedClue: undefined,
+		selectedClueValue: 0,
+		showQuestionModal: false,
+		numSingleJClues: 0,
+		playerScores: new Array<number>(numPlayers).fill(0),
+	};
+};
+
 export default function Game(props: GameProps) {
-	const [data, setData] = useState<Clue[]>();
-	const [showQuestionModal, setShowQuestionModal] = useState(false);
-	const [selectedClue, setSelectedClue] = useState<Clue>();
-	const [selectedClueValue, setSelectedClueValue] = useState(0);
-	const [allGameIds, setAllGameIds] = useState<string[]>([]);
-	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
-	const [playerScores, setPlayerScores] = useState<number[]>(
-		new Array<number>(props.numPlayers).fill(0)
+	const [gameState, setGameState] = useState<GameState>(
+		getInitialGameState(props.numPlayers)
 	);
 
 	// When the component first loads, and when the gameId changes we want to
 	// fetch the new list of Clues.
 	useEffect(() => {
-		getClues(currentGameId).then((result) => setData(result));
+		getClues(gameState.currentGameId).then((result) => {
+			setGameState({
+				...gameState,
+				data: result,
+				numSingleJClues: getNumSingleJepClues(result),
+			});
+		});
+	}, [gameState.data?.length, gameState.currentGameId]);
+
+	const categories = getCategories(gameState.data);
+	const categoryToClueListMap = getCategoryToClueListMap(
+		categories,
+		gameState.data
+	);
+
+	// We only need to fetch the list of all game IDs once, hence the empty
+	// dependency array in this useEffect hook.
+	const [allGameIds, setAllGameIds] = useState<string[]>([]);
+	useEffect(() => {
 		if (allGameIds.length <= 0) {
 			getGameIds().then((result) => setAllGameIds(result));
 		}
-		localStorage.setItem("game_id", currentGameId);
-	}, [currentGameId]);
+	}, []);
 
-	const categories = getCategories(data);
-	const categoryToClueListMap = getCategoryToClueListMap(categories, data);
 	if (categoryToClueListMap === null) {
 		return <div></div>;
 	}
 
 	const handleClickClue = (c: Clue, v: number) => {
-		setSelectedClue(c);
-		setSelectedClueValue(v);
-		setShowQuestionModal(true);
+		setGameState({
+			...gameState,
+			selectedClue: c,
+			selectedClueValue: v,
+			showQuestionModal: true,
+		});
 	};
 
 	const handleSelectPlayer = (i: number, v: number) => {
-		playerScores[i] = playerScores[i] + v;
-		setPlayerScores(playerScores);
-		setShowQuestionModal(false);
+		gameState.playerScores[i] = gameState.playerScores[i] + v;
+		setGameState({
+			...gameState,
+			showQuestionModal: false,
+			playerScores: gameState.playerScores,
+		});
 	};
 
 	const handleHideQuestionModal = () => {
-		setShowQuestionModal(false);
+		setGameState({
+			...gameState,
+			showQuestionModal: false,
+			numSingleJClues: gameState.numSingleJClues - 1,
+		});
 	};
 
 	const handleClickRestart = () => {
-		// Clear local storage but persist the current game_id and envBuildTime.
-		localStorage.clear();
-		localStorage.setItem("game_id", currentGameId);
-		localStorage.setItem("build_time", ENV_BUILD_TIME);
-
-		// Reload the page to trigger the Clues to re-render.
-		window.location.reload();
+		const currentGameId = gameState.currentGameId;
+		setGameState({
+			...getInitialGameState(props.numPlayers),
+			currentGameId: currentGameId,
+		});
 	};
 
 	const handleClickNewGame = () => {
-		// Clear local storage but persist the envBuildTime.
-		localStorage.clear();
-		localStorage.setItem("build_time", ENV_BUILD_TIME);
-
-		const random = Math.floor(Math.random() * allGameIds.length);
-		setCurrentGameId(allGameIds[random]);
+		const randomInd = Math.floor(Math.random() * allGameIds.length);
+		setGameState({
+			...getInitialGameState(props.numPlayers),
+			currentGameId: allGameIds[randomInd],
+		});
 	};
 
-	const renderCat = (catName: string, clues: Clue[]) => {
+	const renderCat = (catName: string, clues: Clue[], doubleJ: boolean) => {
+		let multiplier = doubleJ ? 400 : 200;
 		let myclues = clues.map((c, ind) => {
 			return (
 				<ClueComponent
-					key={currentGameId + ind}
-					value={200 * (ind + 1)}
+					key={gameState.currentGameId + ind}
+					value={multiplier * (ind + 1)}
 					clue={c}
 					handleSelect={handleClickClue}
 				/>
@@ -161,30 +209,40 @@ export default function Game(props: GameProps) {
 		);
 	};
 
+	const renderBoard = (catSlice: string[], doubleJ: boolean) => {
+		let boardCategories = catSlice.map((cat, i) => {
+			return renderCat(cat, categoryToClueListMap.get(cat)!, doubleJ);
+		});
+		return boardCategories;
+	};
+
+	console.log("render");
+	console.log(gameState.numSingleJClues);
 	return (
 		<>
 			<div className="game-container">
 				<StatusBar
-					game_id={currentGameId}
+					game_id={gameState.currentGameId}
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
-				<ScoreBar scores={playerScores} />
-				<div className="flex-grid">
-					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
-					{renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
-					{renderCat(categories[2], categoryToClueListMap.get(categories[2])!)}
-					{renderCat(categories[3], categoryToClueListMap.get(categories[3])!)}
-					{renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
-					{renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
-				</div>
+				<ScoreBar scores={gameState.playerScores} />
+				{gameState.numSingleJClues > 0 ? (
+					<div className="flex-grid">
+						{renderBoard(categories.slice(0, 6), false)}
+					</div>
+				) : (
+					<div className="flex-grid">
+						{renderBoard(categories.slice(6, 12), true)}
+					</div>
+				)}
 			</div>
-			{showQuestionModal && (
+			{gameState.showQuestionModal && (
 				<QuestionModal
-					show={showQuestionModal}
+					show={gameState.showQuestionModal}
 					handleHide={handleHideQuestionModal}
-					clue={selectedClue}
-					value={selectedClueValue}
+					clue={gameState.selectedClue}
+					value={gameState.selectedClueValue}
 					numPlayers={props.numPlayers}
 					handleSelectPlayer={handleSelectPlayer}
 				/>

@@ -6,11 +6,14 @@ General Improvements:
     ☐ unit tests and doc comments
     ☐ need more comments everywhere
     ☐ come up with a better way to handle the config constants in `consts.ts` 
+    ☐ handle ending the game (after all double jep clues are played)
 
 Frontend:
     ☐ style the landing page
     ☐ add instructions to landing page
     ☐ double jeopardy
+    ☐ allow players to enter their names
+    ☐ some category names are too long for their box
 
 Database:
     ☐ split the `game_id` column into two columns (id and date)
@@ -20,6 +23,9 @@ Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
     ✔ scorekeeping? @done(21-03-20 10:42)
     ☐ practice mode
+    ☐ daily doubles?
+    ☐ final jep?
+    ☐ persist scores in the db?
 
 Archive:
   ✔ add status bar @done(21-03-01 05:22) @project(Gameplay Controls)
