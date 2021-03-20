@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ClueComponent from "../components/clue/ClueComponent";
 import QuestionModal from "../components/question-modal/QuestionModal";
 import StatusBar from "../components/status-bar/StatusBar";
+import ScoreBar from "../components/score-bar/ScoreBar";
 
 import "./Game.css";
 
@@ -74,6 +75,10 @@ export default function Game() {
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
+	const [p1Score, setP1Score] = useState(200)
+	const [p2Score, setP2Score] = useState(1000)
+	const [p3Score, setP3Score] = useState(15000)
+
 
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
@@ -149,6 +154,9 @@ export default function Game() {
 					game_id={currentGameId}
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
+				/>
+				<ScoreBar
+					scores={[p1Score, p2Score, p3Score]}
 				/>
 				<div className="flex-grid">
 					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}

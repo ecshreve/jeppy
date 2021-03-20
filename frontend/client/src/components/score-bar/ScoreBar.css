@@ -1,0 +1,20 @@
+.score-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px;
+	border: 5px solid black;
+	background: #4287f5;
+	font-family: "Korinna";
+}
+
+.score-item {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+	border: 2px solid black;
+}
