@@ -1,35 +1,45 @@
 .progress {
-    flex: 1;
-    width: 100%;
-    margin-top: 10px;
+	flex: 1;
+	width: 100%;
+	margin-top: 10px;
 }
 
 .my-modal {
-    margin-top: 5%;
-    font-family: 'Korinna';
+	margin-top: 5%;
+	font-family: "Korinna";
 }
 
 .my-modal .modal-dialog {
-    max-width: 75%;
+	max-width: 75%;
 }
 
 .my-modal .modal-header {
-    font-size: 1.5rem;
-    word-spacing: -10px;
-    background-color: #f2f2f2;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 1.5rem;
+	word-spacing: -10px;
+	background-color: #f2f2f2;
 }
 
 .my-modal .modal-body {
-    font-size: 3rem;
-    word-spacing: -10px;
-    background: #031297;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 25px;
+	font-size: 3rem;
+	word-spacing: -10px;
+	background: #031297;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 25px;
 }
 
 .my-modal .modal-footer {
-    background-color: lightgreen;
-    font-size: 2rem;
-    word-spacing: -10px;
+	display: flex;
+	flex-direction: row;
+	background-color: lightgreen;
+	font-size: 2rem;
+	word-spacing: -10px;
+	justify-content: space-between;
+}
+
+.footer-item {
+	margin: 5px;
 }

@@ -73,12 +73,12 @@ export default function Game() {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
+	const [selectedClueValue, setSelectedClueValue] = useState(0);
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
-	const [p1Score, setP1Score] = useState(200)
-	const [p2Score, setP2Score] = useState(1000)
-	const [p3Score, setP3Score] = useState(15000)
-
+	const [p1Score, setP1Score] = useState(200);
+	const [p2Score, setP2Score] = useState(1000);
+	const [p3Score, setP3Score] = useState(15000);
 
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
@@ -94,9 +94,21 @@ export default function Game() {
 		return <div></div>;
 	}
 
-	const handleClickClue = (c: Clue) => {
+	const handleClickClue = (c: Clue, v: number) => {
 		setSelectedClue(c);
+		setSelectedClueValue(v);
 		setShowQuestionModal(true);
+	};
+
+	const handleSelectPlayer = (i: number, v: number) => {
+		if (i === 0) {
+			setP1Score(p1Score + v);
+		} else if (i === 1) {
+			setP2Score(p2Score + v);
+		} else if (i === 2) {
+			setP3Score(p3Score + v);
+		}
+		setShowQuestionModal(false);
 	};
 
 	const handleHideQuestionModal = () => {
@@ -106,11 +118,11 @@ export default function Game() {
 	const handleClickRestart = () => {
 		// Clear local storage but persist the current game_id and envBuildTime.
 		localStorage.clear();
-		localStorage.setItem("game_id", currentGameId)
+		localStorage.setItem("game_id", currentGameId);
 		localStorage.setItem("build_time", ENV_BUILD_TIME);
 
 		// Reload the page to trigger the Clues to re-render.
-		window.location.reload()
+		window.location.reload();
 	};
 
 	const handleClickNewGame = () => {
@@ -155,9 +167,7 @@ export default function Game() {
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
-				<ScoreBar
-					scores={[p1Score, p2Score, p3Score]}
-				/>
+				<ScoreBar scores={[p1Score, p2Score, p3Score]} />
 				<div className="flex-grid">
 					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
 					{renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
@@ -172,6 +182,8 @@ export default function Game() {
 					show={showQuestionModal}
 					handleHide={handleHideQuestionModal}
 					clue={selectedClue}
+					value={selectedClueValue}
+					handleSelectPlayer={handleSelectPlayer}
 				/>
 			)}
 		</>

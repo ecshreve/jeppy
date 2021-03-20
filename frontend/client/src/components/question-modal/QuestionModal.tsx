@@ -7,11 +7,14 @@ import "./QuestionModal.css";
 
 import { Clue } from "../../requests";
 import { MAX_TIMER_VAL } from "../../consts";
+import { Button } from "react-bootstrap";
 
 type QuestionModalProps = {
 	clue?: Clue;
+	value: number;
 	show: boolean;
 	handleHide: () => void;
+	handleSelectPlayer: (i: number, v: number) => void;
 };
 
 export default function QuestionModal(props: QuestionModalProps) {
@@ -24,8 +27,8 @@ export default function QuestionModal(props: QuestionModalProps) {
 			// TODO: figure out the right way to do this. This is a hacky bandaid
 			// to make the answer show up after the progress bar updates.
 			setTimeout(() => {
-				setShowAnswer(true)
-				setTimerOn(false)
+				setShowAnswer(true);
+				setTimerOn(false);
 			}, 500);
 		}
 
@@ -55,12 +58,29 @@ export default function QuestionModal(props: QuestionModalProps) {
 					onHide={handleUserClick}
 					animation={false}
 				>
-					<Modal.Header>{props.clue.category}</Modal.Header>
+					<Modal.Header>
+						<div>{props.clue.category}</div>
+						<div>${props.value}</div>
+					</Modal.Header>
 					<Modal.Body>
 						{props.clue.question}
 						{timerOn && <ProgressBar now={(timerVal / MAX_TIMER_VAL) * 100} />}
 					</Modal.Body>
-					{showAnswer && <Modal.Footer>{props.clue.answer}</Modal.Footer>}
+					{showAnswer && (
+						<Modal.Footer>
+							<div>
+								<Button
+									className="footer-item"
+									onClick={() => props.handleSelectPlayer(0, props.value)}
+								>
+									Player1
+								</Button>
+								<Button className="footer-item">Player2</Button>
+								<Button className="footer-item">Player3</Button>
+							</div>
+							<div>{props.clue.answer}</div>
+						</Modal.Footer>
+					)}
 				</Modal>
 			)}
 		</>
