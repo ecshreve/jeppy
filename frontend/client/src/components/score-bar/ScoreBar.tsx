@@ -7,11 +7,12 @@ type ScoreBarProps = {
 };
 
 export default function ScoreBar(props: ScoreBarProps) {
-	return (
-		<div className="score-bar">
-			<div className="score-item">Player1: ${props.scores[0]}</div>
-            <div className="score-item">Player2: ${props.scores[1]}</div>
-			<div className="score-item">Player3: ${props.scores[2]}</div>
-		</div>
-	);
+	let myscores = props.scores.map((s, ind) => {
+		return (
+			<div className="score-item">
+				Player{ind + 1}: ${s}
+			</div>
+		);
+	});
+	return <div className="score-bar">{myscores}</div>;
 }

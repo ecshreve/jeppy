@@ -7,13 +7,18 @@ General Improvements:
     ☐ need more comments everywhere
     ☐ come up with a better way to handle the config constants in `consts.ts` 
 
+Frontend:
+    ☐ style the landing page
+    ☐ add instructions to landing page
+    ☐ double jeopardy
+
 Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
 
 Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
-    ☐ scorekeeping?
+    ✔ scorekeeping? @done(21-03-20 10:42)
     ☐ practice mode
 
 Archive:

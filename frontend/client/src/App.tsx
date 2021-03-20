@@ -24,7 +24,7 @@ function App() {
 
 	const handleStartGame = (numPlayers: Number) => {
 		console.log(numPlayers);
-		setNumPlayers(numPlayers.valueOf())
+		setNumPlayers(numPlayers.valueOf());
 	};
 
 	return (
@@ -32,7 +32,7 @@ function App() {
 			{numPlayers <= 0 ? (
 				<Landing handleClickStartGame={handleStartGame} />
 			) : (
-				<Game />
+				<Game numPlayers={numPlayers} />
 			)}
 		</div>
 	);

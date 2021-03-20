@@ -69,17 +69,23 @@ const getInitialGameId = (): string => {
 	return cachedGameId != null ? cachedGameId : DEVELOPMENT_GAME_ID;
 };
 
-export default function Game() {
+type GameProps = {
+	numPlayers: number;
+};
+
+export default function Game(props: GameProps) {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [selectedClueValue, setSelectedClueValue] = useState(0);
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
-	const [p1Score, setP1Score] = useState(200);
-	const [p2Score, setP2Score] = useState(1000);
-	const [p3Score, setP3Score] = useState(15000);
+	const [playerScores, setPlayerScores] = useState<number[]>(
+		new Array<number>(props.numPlayers).fill(0)
+	);
 
+	// When the component first loads, and when the gameId changes we want to
+	// fetch the new list of Clues.
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
 		if (allGameIds.length <= 0) {
@@ -101,13 +107,8 @@ export default function Game() {
 	};
 
 	const handleSelectPlayer = (i: number, v: number) => {
-		if (i === 0) {
-			setP1Score(p1Score + v);
-		} else if (i === 1) {
-			setP2Score(p2Score + v);
-		} else if (i === 2) {
-			setP3Score(p3Score + v);
-		}
+		playerScores[i] = playerScores[i] + v;
+		setPlayerScores(playerScores);
 		setShowQuestionModal(false);
 	};
 
@@ -145,6 +146,7 @@ export default function Game() {
 				/>
 			);
 		});
+
 		while (myclues.length < 5) {
 			myclues.push(getEmptyClue(myclues.length));
 		}
@@ -167,7 +169,7 @@ export default function Game() {
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
-				<ScoreBar scores={[p1Score, p2Score, p3Score]} />
+				<ScoreBar scores={playerScores} />
 				<div className="flex-grid">
 					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
 					{renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
@@ -183,6 +185,7 @@ export default function Game() {
 					handleHide={handleHideQuestionModal}
 					clue={selectedClue}
 					value={selectedClueValue}
+					numPlayers={props.numPlayers}
 					handleSelectPlayer={handleSelectPlayer}
 				/>
 			)}

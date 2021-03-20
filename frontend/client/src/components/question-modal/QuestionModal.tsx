@@ -14,6 +14,7 @@ type QuestionModalProps = {
 	value: number;
 	show: boolean;
 	handleHide: () => void;
+	numPlayers: number;
 	handleSelectPlayer: (i: number, v: number) => void;
 };
 
@@ -49,6 +50,29 @@ export default function QuestionModal(props: QuestionModalProps) {
 		}
 	};
 
+	// Build the array of score buttons for the footer. We use a dummy array with
+	// length equal to the number of players so we can use array.map instead of
+	// looping through and appending.
+	let scoreButtons = Array(props.numPlayers)
+		.fill(0)
+		.map((x, i) => {
+			return (
+				<Button
+					className="footer-item"
+					onClick={() => props.handleSelectPlayer(i, props.value)}
+				>
+					Player{i + 1}
+				</Button>
+			);
+		});
+
+	// Add the "Close" button to the end of our button array.
+	scoreButtons.push(
+		<Button variant="danger" className="footer-item" onClick={props.handleHide}>
+			Close
+		</Button>
+	);
+
 	return (
 		<>
 			{props.clue && (
@@ -56,6 +80,7 @@ export default function QuestionModal(props: QuestionModalProps) {
 					className="my-modal"
 					show={props.show}
 					onHide={handleUserClick}
+					onClick={handleUserClick}
 					animation={false}
 				>
 					<Modal.Header>
@@ -68,16 +93,7 @@ export default function QuestionModal(props: QuestionModalProps) {
 					</Modal.Body>
 					{showAnswer && (
 						<Modal.Footer>
-							<div>
-								<Button
-									className="footer-item"
-									onClick={() => props.handleSelectPlayer(0, props.value)}
-								>
-									Player1
-								</Button>
-								<Button className="footer-item">Player2</Button>
-								<Button className="footer-item">Player3</Button>
-							</div>
+							<div>{scoreButtons}</div>
 							<div>{props.clue.answer}</div>
 						</Modal.Footer>
 					)}
