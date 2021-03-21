@@ -20,7 +20,17 @@ export const clueSlice = createSlice({
 				state.clues.push({ clueID: action.payload, enabled: true });
 			}
 		},
-		resetClues: (state) => {
+		replaceClues: (state, action: PayloadAction<string[]>) => {
+			console.log("AHHH");
+			const newClues = action.payload.map((s) => {
+				return { clueID: s, enabled: true };
+			});
+			state.clues = newClues;
+		},
+		reenableAllClues: (state) => {
+			state.clues.map((c) => (c.enabled = true));
+		},
+		clearClues: (state) => {
 			state.clues = [];
 		},
 		toggleEnabled: (state, action) => {
@@ -36,7 +46,9 @@ export const clueSlice = createSlice({
 
 export const {
 	addClueIfNotExists,
-	resetClues,
+	reenableAllClues,
+	replaceClues,
+	clearClues,
 	toggleEnabled,
 } = clueSlice.actions;
 

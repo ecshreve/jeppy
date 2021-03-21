@@ -1,14 +1,8 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import React from "react";
 
 import "./scoreBar.css";
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
-import {
-	incrementPlayerScoreByAmount,
-	decrementPlayerScoreByAmount,
-} from "./scoreBarSlice";
+import { useAppSelector } from "../../app/hooks";
 
 type ScoreBarProps = {
 	playerIDs: number[];
@@ -17,7 +11,6 @@ type ScoreBarProps = {
 export default function ScoreBar(props: ScoreBarProps) {
 	// The `state` arg is correctly typed as `RootState` already
 	const scores = useAppSelector((state) => state.scoreBar.scores);
-	const dispatch = useAppDispatch();
 
 	let myscores = props.playerIDs.map((pid, ind) => {
 		const playerScore = scores.find((ps) => ps.playerID === pid);

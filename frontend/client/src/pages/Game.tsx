@@ -10,15 +10,21 @@ import "./Game.css";
 
 import { Clue, getClues, getGameIds } from "../requests";
 import { DEVELOPMENT_GAME_ID } from "../consts";
-import { ENV_BUILD_TIME } from "../App";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
-	addClueIfNotExists,
-	resetClues,
+	reenableAllClues,
+	replaceClues,
+	clearClues,
 	toggleEnabled,
 } from "../features/clue/clueSlice";
-import { nextRound, Round } from "../features/game/gameSlice";
 import { resetScores } from "../features/score-bar/scoreBarSlice";
+
+enum Round {
+	SINGLE,
+	DOUBLE,
+	FINAL,
+	GAME_OVER,
+}
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -69,11 +75,6 @@ const getEmptyClue = (ind: number) => {
 	);
 };
 
-const getInitialGameId = (): string => {
-	const cachedGameId = localStorage.getItem("game_id");
-	return cachedGameId != null ? cachedGameId : DEVELOPMENT_GAME_ID;
-};
-
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
 	const [round, setRound] = useState(Round.SINGLE);
@@ -81,7 +82,7 @@ export default function Game() {
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [selectedClueValue, setSelectedClueValue] = useState(0);
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
-	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
+	const [currentGameId, setCurrentGameId] = useState(DEVELOPMENT_GAME_ID);
 
 	const dispatch = useAppDispatch();
 
@@ -90,14 +91,30 @@ export default function Game() {
 		if (allGameIds.length <= 0) {
 			getGameIds().then((result) => setAllGameIds(result));
 		}
-	}, []);
+	}, [allGameIds]);
 
-	// Fetch new clues whenever the current game id changes.
+	// Fetch new clues whenever the current game id changes, and switch back to
+	// the SINGLE jeopardy round.
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
 		setRound(0);
-		localStorage.setItem("game_id", currentGameId);
 	}, [currentGameId]);
+
+	useEffect(() => {
+		if (data === undefined) {
+			return;
+		}
+
+		const filterChar = round === 0 ? "J" : "D";
+		const clueIds = data
+			?.filter((c) => c.clue_id[0] === filterChar)
+			?.map((cc) => {
+				return cc.clue_id;
+			});
+		if (clueIds) {
+			dispatch(replaceClues(clueIds));
+		}
+	}, [data, dispatch, round, currentGameId]);
 
 	const categories = getCategories(data);
 	const categoryToClueListMap = getCategoryToClueListMap(categories, data!);
@@ -110,23 +127,15 @@ export default function Game() {
 	};
 
 	const handleClickRestart = () => {
-		// Clear local storage but persist the current game_id and envBuildTime.
-		localStorage.clear();
-		localStorage.setItem("game_id", currentGameId);
-		localStorage.setItem("build_time", ENV_BUILD_TIME);
-
-		// Reload the page to trigger the Clues to re-render.
-		window.location.reload();
+		dispatch(reenableAllClues());
+		dispatch(resetScores());
+		setRound(0);
 	};
 
 	const handleClickNewGame = () => {
-		// Clear local storage but persist the envBuildTime.
-		localStorage.clear();
-		localStorage.setItem("build_time", ENV_BUILD_TIME);
-
 		const random = Math.floor(Math.random() * allGameIds.length);
 		setCurrentGameId(allGameIds[random]);
-		dispatch(resetClues());
+		dispatch(clearClues());
 		dispatch(resetScores());
 	};
 
@@ -136,14 +145,13 @@ export default function Game() {
 		setShowQuestionModal(false);
 		if (clues.length > 0 && numEnabled === 0) {
 			setRound(round + 1);
-			dispatch(resetClues());
+			dispatch(clearClues());
 		}
 	};
 
 	const renderCat = (catName: string, rawClues: Clue[]) => {
 		const multiplier = round === Round.DOUBLE ? 400 : 200;
 		let myclues = rawClues.map((c, ind) => {
-			dispatch(addClueIfNotExists(c.clue_id));
 			return (
 				<ClueComponent
 					key={currentGameId + c.clue_id}

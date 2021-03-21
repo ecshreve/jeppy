@@ -21,7 +21,7 @@ export const scoreBarSlice = createSlice({
 	initialState,
 	reducers: {
 		resetScores: (state) => {
-			state.scores.map((ps, ind) => {
+			state.scores.forEach((ps) => {
 				ps.score = 0;
 			});
 		},
@@ -33,7 +33,7 @@ export const scoreBarSlice = createSlice({
 				(ps) => ps.playerID === action.payload.playerID
 			);
 
-			if (playerScore != undefined) {
+			if (playerScore !== undefined) {
 				playerScore.score += action.payload.amount;
 			}
 		},
@@ -45,7 +45,7 @@ export const scoreBarSlice = createSlice({
 				(ps) => ps.playerID === action.payload.playerID
 			);
 
-			if (playerScore != undefined) {
+			if (playerScore !== undefined) {
 				playerScore.score -= action.payload.amount;
 			}
 		},

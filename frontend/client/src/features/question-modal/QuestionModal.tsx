@@ -57,9 +57,10 @@ export default function QuestionModal(props: QuestionModalProps) {
 	// Build the array of score buttons for the footer. We use a dummy array with
 	// length equal to the number of players so we can use array.map instead of
 	// looping through and appending.
-	let scoreButtons = props.playerIDs.map((pid, ind) => {
+	let scoreButtons = props.playerIDs.map((pid) => {
 		return (
 			<Button
+				key={pid}
 				className="footer-item"
 				onClick={() => {
 					dispatch(
