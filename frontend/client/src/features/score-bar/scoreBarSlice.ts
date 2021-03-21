@@ -20,6 +20,11 @@ export const scoreBarSlice = createSlice({
 	name: "scoreBar",
 	initialState,
 	reducers: {
+		resetScores: (state) => {
+			state.scores.map((ps, ind) => {
+				ps.score = 0;
+			});
+		},
 		incrementPlayerScoreByAmount: (
 			state,
 			action: PayloadAction<{ playerID: number; amount: number }>
@@ -49,6 +54,7 @@ export const scoreBarSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+	resetScores,
 	incrementPlayerScoreByAmount,
 	decrementPlayerScoreByAmount,
 } = scoreBarSlice.actions;

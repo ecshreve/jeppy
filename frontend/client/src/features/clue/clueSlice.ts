@@ -20,7 +20,7 @@ export const clueSlice = createSlice({
 				state.clues.push({ clueID: action.payload, enabled: true });
 			}
 		},
-		resetClues: (state, action) => {
+		resetClues: (state) => {
 			state.clues = [];
 		},
 		toggleEnabled: (state, action) => {

@@ -40,12 +40,8 @@ const getCategories = (clues: Clue[] | undefined): string[] => {
 
 const getCategoryToClueListMap = (
 	categories: string[],
-	clues: Clue[] | undefined
-): Map<string, Clue[]> | null => {
-	if (clues === undefined) {
-		return null;
-	}
-
+	clues: Clue[]
+): Map<string, Clue[]> => {
 	// This is a very not optimal way to do this.
 	let catMap = new Map<string, Clue[]>();
 	for (let cat of categories) {
@@ -96,20 +92,13 @@ export default function Game() {
 	}, [currentGameId]);
 
 	const categories = getCategories(data);
-	const categoryToClueListMap = getCategoryToClueListMap(categories, data);
-	if (categoryToClueListMap === null) {
-		return <div></div>;
-	}
+	const categoryToClueListMap = getCategoryToClueListMap(categories, data!);
 
 	const handleClickClue = (c: Clue, v: number) => {
 		setSelectedClue(c);
 		setSelectedClueValue(v);
 		setShowQuestionModal(true);
 		dispatch(toggleEnabled(c.clue_id));
-	};
-
-	const handleHideQuestionModal = () => {
-		setShowQuestionModal(false);
 	};
 
 	const handleClickRestart = () => {
@@ -129,7 +118,7 @@ export default function Game() {
 
 		const random = Math.floor(Math.random() * allGameIds.length);
 		setCurrentGameId(allGameIds[random]);
-		dispatch(resetClues("new_game"));
+		dispatch(resetClues());
 	};
 
 	const renderCat = (catName: string, rawClues: Clue[]) => {
@@ -167,19 +156,39 @@ export default function Game() {
 					handleClickNewGame={handleClickNewGame}
 				/>
 				<ScoreBar playerIDs={[1, 2, 3]} />
-				<div className="flex-grid">
-					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
-					{renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
-					{renderCat(categories[2], categoryToClueListMap.get(categories[2])!)}
-					{renderCat(categories[3], categoryToClueListMap.get(categories[3])!)}
-					{renderCat(categories[4], categoryToClueListMap.get(categories[4])!)}
-					{renderCat(categories[5], categoryToClueListMap.get(categories[5])!)}
-				</div>
+				{data && (
+					<div className="flex-grid">
+						{renderCat(
+							categories[0],
+							categoryToClueListMap.get(categories[0])!
+						)}
+						{renderCat(
+							categories[1],
+							categoryToClueListMap.get(categories[1])!
+						)}
+						{renderCat(
+							categories[2],
+							categoryToClueListMap.get(categories[2])!
+						)}
+						{renderCat(
+							categories[3],
+							categoryToClueListMap.get(categories[3])!
+						)}
+						{renderCat(
+							categories[4],
+							categoryToClueListMap.get(categories[4])!
+						)}
+						{renderCat(
+							categories[5],
+							categoryToClueListMap.get(categories[5])!
+						)}
+					</div>
+				)}
 			</div>
 			{showQuestionModal && (
 				<QuestionModal
 					show={showQuestionModal}
-					handleHide={handleHideQuestionModal}
+					handleHide={() => setShowQuestionModal(false)}
 					clue={selectedClue}
 					value={selectedClueValue}
 					playerIDs={[1, 2, 3]}
