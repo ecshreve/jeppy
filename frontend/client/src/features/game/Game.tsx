@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import ClueComponent from "../features/clue/ClueComponent";
-import QuestionModal from "../features/question-modal/QuestionModal";
-import StatusBar from "../features/status-bar/StatusBar";
+import ClueComponent from "../clue/ClueComponent";
+import QuestionModal from "../question-modal/QuestionModal";
+import StatusBar from "../status-bar/StatusBar";
 
-import ScoreBar from "../features/score-bar/scoreBar";
+import ScoreBar from "../score-bar/scoreBar";
 
 import "./Game.css";
 
-import { Clue, getClues, getGameIds } from "../requests";
-import { DEVELOPMENT_GAME_ID } from "../consts";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { Clue, getClues, getGameIds } from "../../requests";
+import { DEVELOPMENT_GAME_ID } from "../../consts";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	reenableAllClues,
 	replaceClues,
 	clearClues,
 	toggleEnabled,
-} from "../features/clue/clueSlice";
-import { resetScores } from "../features/score-bar/scoreBarSlice";
+} from "../clue/clueSlice";
+import { resetScores } from "../score-bar/scoreBarSlice";
 
 enum Round {
 	SINGLE,
