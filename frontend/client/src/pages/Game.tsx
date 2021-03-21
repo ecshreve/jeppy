@@ -17,6 +17,8 @@ import {
 	resetClues,
 	toggleEnabled,
 } from "../features/clue/clueSlice";
+import { nextRound, Round } from "../features/game/gameSlice";
+import { resetScores } from "../features/score-bar/scoreBarSlice";
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -74,20 +76,26 @@ const getInitialGameId = (): string => {
 
 export default function Game() {
 	const [data, setData] = useState<Clue[]>();
+	const [round, setRound] = useState(Round.SINGLE);
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [selectedClueValue, setSelectedClueValue] = useState(0);
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
 
-	const clues = useAppSelector((state) => state.clue.clues);
 	const dispatch = useAppDispatch();
 
+	// Only fetch the full list of game ids once when the component mounts.
 	useEffect(() => {
-		getClues(currentGameId).then((result) => setData(result));
 		if (allGameIds.length <= 0) {
 			getGameIds().then((result) => setAllGameIds(result));
 		}
+	}, []);
+
+	// Fetch new clues whenever the current game id changes.
+	useEffect(() => {
+		getClues(currentGameId).then((result) => setData(result));
+		setRound(0);
 		localStorage.setItem("game_id", currentGameId);
 	}, [currentGameId]);
 
@@ -119,20 +127,33 @@ export default function Game() {
 		const random = Math.floor(Math.random() * allGameIds.length);
 		setCurrentGameId(allGameIds[random]);
 		dispatch(resetClues());
+		dispatch(resetScores());
+	};
+
+	const clues = useAppSelector((state) => state.clue.clues);
+	const numEnabled = clues.filter((c) => c.enabled === true).length;
+	const handleHideModal = () => {
+		setShowQuestionModal(false);
+		if (clues.length > 0 && numEnabled === 0) {
+			setRound(round + 1);
+			dispatch(resetClues());
+		}
 	};
 
 	const renderCat = (catName: string, rawClues: Clue[]) => {
+		const multiplier = round === Round.DOUBLE ? 400 : 200;
 		let myclues = rawClues.map((c, ind) => {
 			dispatch(addClueIfNotExists(c.clue_id));
 			return (
 				<ClueComponent
 					key={currentGameId + c.clue_id}
-					value={200 * (ind + 1)}
+					value={multiplier * (ind + 1)}
 					clue={c}
 					handleSelect={handleClickClue}
 				/>
 			);
 		});
+
 		while (myclues.length < 5) {
 			myclues.push(getEmptyClue(myclues.length));
 		}
@@ -147,6 +168,23 @@ export default function Game() {
 		);
 	};
 
+	const renderBoardV2 = () => {
+		if (round > 1) {
+			return (
+				<div className="final-jep">
+					<div className="final-text">Thanks for Playing!</div>
+				</div>
+			);
+		}
+
+		const [start, end] = round === Round.SINGLE ? [0, 6] : [6, 12];
+		const catSlice = categories.slice(start, end);
+		let boardCategories = catSlice.map((cat, i) => {
+			return renderCat(cat, categoryToClueListMap.get(cat)!);
+		});
+		return <div className="flex-grid">{boardCategories}</div>;
+	};
+
 	return (
 		<>
 			<div className="game-container">
@@ -156,39 +194,12 @@ export default function Game() {
 					handleClickNewGame={handleClickNewGame}
 				/>
 				<ScoreBar playerIDs={[1, 2, 3]} />
-				{data && (
-					<div className="flex-grid">
-						{renderCat(
-							categories[0],
-							categoryToClueListMap.get(categories[0])!
-						)}
-						{renderCat(
-							categories[1],
-							categoryToClueListMap.get(categories[1])!
-						)}
-						{renderCat(
-							categories[2],
-							categoryToClueListMap.get(categories[2])!
-						)}
-						{renderCat(
-							categories[3],
-							categoryToClueListMap.get(categories[3])!
-						)}
-						{renderCat(
-							categories[4],
-							categoryToClueListMap.get(categories[4])!
-						)}
-						{renderCat(
-							categories[5],
-							categoryToClueListMap.get(categories[5])!
-						)}
-					</div>
-				)}
+				{renderBoardV2()}
 			</div>
 			{showQuestionModal && (
 				<QuestionModal
 					show={showQuestionModal}
-					handleHide={() => setShowQuestionModal(false)}
+					handleHide={handleHideModal}
 					clue={selectedClue}
 					value={selectedClueValue}
 					playerIDs={[1, 2, 3]}
