@@ -99,7 +99,10 @@ export default function QuestionModal(props: QuestionModalProps) {
 					onClick={handleUserClick}
 					animation={false}
 				>
-					<Modal.Header>{props.clue.category}</Modal.Header>
+					<Modal.Header>
+						<div>{props.clue.category}</div>
+						<div>${props.value}</div>
+					</Modal.Header>
 					<Modal.Body>
 						{props.clue.question}
 						{timerOn && <ProgressBar now={(timerVal / MAX_TIMER_VAL) * 100} />}
