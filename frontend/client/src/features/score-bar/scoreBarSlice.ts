@@ -24,6 +24,7 @@ export const scoreBarSlice = createSlice({
 			state,
 			action: PayloadAction<{ playerID: number; amount: number }>
 		) => {
+			console.log("in reducer");
 			const playerScore = state.scores.find(
 				(ps) => ps.playerID === action.payload.playerID
 			);

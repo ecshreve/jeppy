@@ -74,6 +74,7 @@ export default function Game() {
 	const [data, setData] = useState<Clue[]>();
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
+	const [selectedClueValue, setSelectedClueValue] = useState(0);
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
 
@@ -91,8 +92,9 @@ export default function Game() {
 		return <div></div>;
 	}
 
-	const handleClickClue = (c: Clue) => {
+	const handleClickClue = (c: Clue, v: number) => {
 		setSelectedClue(c);
+		setSelectedClueValue(v);
 		setShowQuestionModal(true);
 	};
 
@@ -167,6 +169,8 @@ export default function Game() {
 					show={showQuestionModal}
 					handleHide={handleHideQuestionModal}
 					clue={selectedClue}
+					value={selectedClueValue}
+					playerIDs={[1, 2, 3]}
 				/>
 			)}
 		</>

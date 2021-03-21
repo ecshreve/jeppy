@@ -7,13 +7,13 @@ import { Clue } from "../../requests";
 type ClueProps = {
 	value: number;
 	clue: Clue;
-	handleSelect: (c: Clue) => void;
+	handleSelect: (c: Clue, v: number) => void;
 };
 
 export default function ClueComponent(props: ClueProps) {
 	const handleClick = () => {
 		localStorage.setItem(props.clue.clue_id, "true");
-		props.handleSelect(props.clue);
+		props.handleSelect(props.clue, props.value);
 	};
 
 	return (
