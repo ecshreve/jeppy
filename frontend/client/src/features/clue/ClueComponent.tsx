@@ -3,6 +3,7 @@ import React from "react";
 import "./ClueComponent.css";
 
 import { Clue } from "../../requests";
+import { useAppSelector } from "../../app/hooks";
 
 type ClueProps = {
 	value: number;
@@ -11,14 +12,17 @@ type ClueProps = {
 };
 
 export default function ClueComponent(props: ClueProps) {
+	const clue = useAppSelector((state) =>
+		state.clue.clues.find((c) => c.clueID === props.clue.clue_id)
+	);
+
 	const handleClick = () => {
-		localStorage.setItem(props.clue.clue_id, "true");
 		props.handleSelect(props.clue, props.value);
 	};
 
 	return (
 		<>
-			{localStorage.getItem(props.clue.clue_id) == null ? (
+			{clue?.enabled ? (
 				<div className="clue" onClick={handleClick}>
 					<p>${props.value}</p>
 				</div>

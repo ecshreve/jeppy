@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import ClueComponent from "../components/clue/ClueComponent";
+import ClueComponent from "../features/clue/ClueComponent";
 import QuestionModal from "../components/question-modal/QuestionModal";
 import StatusBar from "../components/status-bar/StatusBar";
 
@@ -11,6 +11,8 @@ import "./Game.css";
 import { Clue, getClues, getGameIds } from "../requests";
 import { DEVELOPMENT_GAME_ID } from "../consts";
 import { ENV_BUILD_TIME } from "../App";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { addClueIfNotExists, toggleEnabled } from "../features/clue/clueSlice";
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -78,6 +80,9 @@ export default function Game() {
 	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(getInitialGameId());
 
+	const clues = useAppSelector((state) => state.clue.clues);
+	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		getClues(currentGameId).then((result) => setData(result));
 		if (allGameIds.length <= 0) {
@@ -96,6 +101,7 @@ export default function Game() {
 		setSelectedClue(c);
 		setSelectedClueValue(v);
 		setShowQuestionModal(true);
+		dispatch(toggleEnabled(c.clue_id));
 	};
 
 	const handleHideQuestionModal = () => {
@@ -121,8 +127,9 @@ export default function Game() {
 		setCurrentGameId(allGameIds[random]);
 	};
 
-	const renderCat = (catName: string, clues: Clue[]) => {
-		let myclues = clues.map((c, ind) => {
+	const renderCat = (catName: string, rawClues: Clue[]) => {
+		let myclues = rawClues.map((c, ind) => {
+			dispatch(addClueIfNotExists(c.clue_id));
 			return (
 				<ClueComponent
 					key={currentGameId + ind}
