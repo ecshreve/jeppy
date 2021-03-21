@@ -88,10 +88,8 @@ export default function Game() {
 
 	// Only fetch the full list of game ids once when the component mounts.
 	useEffect(() => {
-		if (allGameIds.length <= 0) {
-			getGameIds().then((result) => setAllGameIds(result));
-		}
-	}, [allGameIds]);
+		getGameIds().then((result) => setAllGameIds(result));
+	}, []);
 
 	// Fetch new clues whenever the current game id changes, and switch back to
 	// the SINGLE jeopardy round.
@@ -100,11 +98,13 @@ export default function Game() {
 		setRound(0);
 	}, [currentGameId]);
 
+	// Reset the clues array when the current game id or round changes.
 	useEffect(() => {
-		if (data === undefined) {
+		if (data === undefined || dispatch === undefined) {
 			return;
 		}
 
+		// Double jeopardy clue_ids start with "DJ_..." and single start with "J_..".
 		const filterChar = round === 0 ? "J" : "D";
 		const clueIds = data
 			?.filter((c) => c.clue_id[0] === filterChar)
@@ -167,7 +167,7 @@ export default function Game() {
 		}
 
 		return (
-			<div className="catcol">
+			<div key={catName} className="catcol">
 				<div className="cat">
 					<p>{catName}</p>
 				</div>

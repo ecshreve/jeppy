@@ -21,7 +21,6 @@ export const clueSlice = createSlice({
 			}
 		},
 		replaceClues: (state, action: PayloadAction<string[]>) => {
-			console.log("AHHH");
 			const newClues = action.payload.map((s) => {
 				return { clueID: s, enabled: true };
 			});

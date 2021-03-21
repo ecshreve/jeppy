@@ -79,7 +79,12 @@ export default function QuestionModal(props: QuestionModalProps) {
 
 	// Add the "Close" button to the end of our button array.
 	scoreButtons.push(
-		<Button variant="danger" className="footer-item" onClick={props.handleHide}>
+		<Button
+			key="close"
+			variant="danger"
+			className="footer-item"
+			onClick={props.handleHide}
+		>
 			Close
 		</Button>
 	);
