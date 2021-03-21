@@ -4,6 +4,8 @@ import ClueComponent from "../components/clue/ClueComponent";
 import QuestionModal from "../components/question-modal/QuestionModal";
 import StatusBar from "../components/status-bar/StatusBar";
 
+import ScoreBar from "../features/score-bar/scoreBar";
+
 import "./Game.css";
 
 import { Clue, getClues, getGameIds } from "../requests";
@@ -101,11 +103,11 @@ export default function Game() {
 	const handleClickRestart = () => {
 		// Clear local storage but persist the current game_id and envBuildTime.
 		localStorage.clear();
-		localStorage.setItem("game_id", currentGameId)
+		localStorage.setItem("game_id", currentGameId);
 		localStorage.setItem("build_time", ENV_BUILD_TIME);
 
 		// Reload the page to trigger the Clues to re-render.
-		window.location.reload()
+		window.location.reload();
 	};
 
 	const handleClickNewGame = () => {
@@ -150,6 +152,7 @@ export default function Game() {
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
+				<ScoreBar playerIDs={[1, 2, 3]} />
 				<div className="flex-grid">
 					{renderCat(categories[0], categoryToClueListMap.get(categories[0])!)}
 					{renderCat(categories[1], categoryToClueListMap.get(categories[1])!)}
