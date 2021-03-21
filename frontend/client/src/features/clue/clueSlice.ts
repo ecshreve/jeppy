@@ -20,6 +20,9 @@ export const clueSlice = createSlice({
 				state.clues.push({ clueID: action.payload, enabled: true });
 			}
 		},
+		resetClues: (state, action) => {
+			state.clues = [];
+		},
 		toggleEnabled: (state, action) => {
 			const clue = state.clues.find((c) => c.clueID === action.payload);
 			// TODO fix this it bad
@@ -31,6 +34,10 @@ export const clueSlice = createSlice({
 	},
 });
 
-export const { addClueIfNotExists, toggleEnabled } = clueSlice.actions;
+export const {
+	addClueIfNotExists,
+	resetClues,
+	toggleEnabled,
+} = clueSlice.actions;
 
 export default clueSlice.reducer;

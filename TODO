@@ -15,7 +15,8 @@ Ideas:
     ☐ landing page to choose a historical game to play or pick categories?
     ☐ scorekeeping?
     ☐ practice mode
-
+    Multiplayer:
+        ☐ assign keyboard keys to each player as a pseudo "buzzer"
 Archive:
   ✔ add status bar @done(21-03-01 05:22) @project(Gameplay Controls)
   ✔ add button to start a new game @done(21-03-01 05:22) @project(Gameplay Controls)

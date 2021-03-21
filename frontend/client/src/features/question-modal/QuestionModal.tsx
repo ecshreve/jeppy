@@ -5,11 +5,8 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.css";
 import "./QuestionModal.css";
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import {
-	incrementPlayerScoreByAmount,
-	decrementPlayerScoreByAmount,
-} from "../../features/score-bar/scoreBarSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { incrementPlayerScoreByAmount } from "../score-bar/scoreBarSlice";
 
 import { Clue } from "../../requests";
 import { MAX_TIMER_VAL } from "../../consts";
@@ -28,7 +25,6 @@ export default function QuestionModal(props: QuestionModalProps) {
 	const [timerOn, setTimerOn] = useState(true);
 	const [showAnswer, setShowAnswer] = useState(false);
 
-	const scores = useAppSelector((state) => state.scoreBar.scores);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -94,6 +90,7 @@ export default function QuestionModal(props: QuestionModalProps) {
 					className="my-modal"
 					show={props.show}
 					onHide={handleUserClick}
+					onClick={handleUserClick}
 					animation={false}
 				>
 					<Modal.Header>{props.clue.category}</Modal.Header>

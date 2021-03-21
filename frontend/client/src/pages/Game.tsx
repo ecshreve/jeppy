@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import ClueComponent from "../features/clue/ClueComponent";
-import QuestionModal from "../components/question-modal/QuestionModal";
-import StatusBar from "../components/status-bar/StatusBar";
+import QuestionModal from "../features/question-modal/QuestionModal";
+import StatusBar from "../features/status-bar/StatusBar";
 
 import ScoreBar from "../features/score-bar/scoreBar";
 
@@ -12,7 +12,11 @@ import { Clue, getClues, getGameIds } from "../requests";
 import { DEVELOPMENT_GAME_ID } from "../consts";
 import { ENV_BUILD_TIME } from "../App";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addClueIfNotExists, toggleEnabled } from "../features/clue/clueSlice";
+import {
+	addClueIfNotExists,
+	resetClues,
+	toggleEnabled,
+} from "../features/clue/clueSlice";
 
 const getCategories = (clues: Clue[] | undefined): string[] => {
 	if (clues === undefined) {
@@ -125,6 +129,7 @@ export default function Game() {
 
 		const random = Math.floor(Math.random() * allGameIds.length);
 		setCurrentGameId(allGameIds[random]);
+		dispatch(resetClues("new_game"));
 	};
 
 	const renderCat = (catName: string, rawClues: Clue[]) => {
@@ -132,7 +137,7 @@ export default function Game() {
 			dispatch(addClueIfNotExists(c.clue_id));
 			return (
 				<ClueComponent
-					key={currentGameId + ind}
+					key={currentGameId + c.clue_id}
 					value={200 * (ind + 1)}
 					clue={c}
 					handleSelect={handleClickClue}
