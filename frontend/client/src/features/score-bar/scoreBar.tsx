@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./scoreBar.css";
+import "./ScoreBar.css";
 
 import { useAppSelector } from "../../app/hooks";
 
@@ -10,7 +10,7 @@ export default function ScoreBar() {
 	let scores = players.map((player) => {
 		return (
 			<div key={player.name} className="score-item">
-				{player.name}: ${player.score}
+				{player.name} ${player.score}
 			</div>
 		);
 	});

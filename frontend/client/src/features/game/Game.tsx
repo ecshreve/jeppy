@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import ClueComponent from "../clue/ClueComponent";
 import QuestionModal from "../question-modal/QuestionModal";
 import StatusBar from "../status-bar/StatusBar";
-
-import ScoreBar from "../score-bar/scoreBar";
+import ScoreBar from "../score-bar/ScoreBar";
 
 import "./Game.css";
 

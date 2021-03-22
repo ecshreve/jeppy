@@ -22,7 +22,7 @@ export const playerSlice = createSlice({
 					return playerName.length > 0;
 				})
 				.map((playerName) => {
-					return { name: playerName, score: 0 };
+					return { name: playerName.toUpperCase(), score: 0 };
 				});
 		},
 		resetScores: (state) => {
