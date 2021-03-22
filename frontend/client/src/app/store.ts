@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import clueReducer from "../features/clue/clueSlice";
+import configReducer from "../features/config/configSlice";
 import gameReducer from "../features/game/gameSlice";
 import scoreBarReducer from "../features/score-bar/scoreBarSlice";
 
@@ -9,6 +10,7 @@ export const store = configureStore({
 		clue: clueReducer,
 		game: gameReducer,
 		scoreBar: scoreBarReducer,
+		config: configReducer,
 	},
 });
 

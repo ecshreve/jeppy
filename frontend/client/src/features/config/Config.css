@@ -1,0 +1,38 @@
+.config-container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.config-pane {
+	display: flex;
+	flex-direction: column;
+	background: #031297;
+	font-family: "Korinna";
+
+	border: 3px solid black;
+	width: 50%;
+	height: 50%;
+	padding: 10px;
+}
+
+.config-pane-header {
+	display: flex;
+
+	color: #f2f2f2;
+	font-size: 1.2rem;
+	justify-content: center;
+}
+
+.config-pane-content {
+	background: #f2f2f2;
+	padding: 10px;
+}
+
+.config-pane-playerNameInput {
+	padding: 5px;
+	word-spacing: -5px;
+}
