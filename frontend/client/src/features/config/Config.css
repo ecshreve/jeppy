@@ -36,3 +36,15 @@
 	padding: 5px;
 	word-spacing: -5px;
 }
+
+.config-gameSelection {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.config-gameSelection-button {
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+}

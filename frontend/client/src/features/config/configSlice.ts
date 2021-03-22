@@ -5,6 +5,7 @@ type ParsedGameId = {
 	raw: string;
 	year: string;
 	month: string;
+	showNumber: string;
 };
 interface ConfigState {
 	gameActive: boolean;
@@ -25,9 +26,10 @@ const parseGameId = (gameId: string): ParsedGameId => {
 	const parts = gameId.split(",");
 
 	const y = parts[2].trim();
-	const m = parts[1].trim().trim().split(" ")[0];
+	const m = parts[1].trim().split(" ")[0];
+	const s = parts[0].trim().split("-")[0].split(" ")[1].trim();
 
-	return { raw: gameId, year: y, month: m };
+	return { raw: gameId, year: y, month: m, showNumber: s };
 };
 
 export const configSlice = createSlice({
@@ -45,12 +47,10 @@ export const configSlice = createSlice({
 		},
 		setCurrentGameId: (state, action) => {
 			state.currentGameId = action.payload;
-			console.log(parseGameId(state.currentGameId));
 		},
 		setRandomGameId: (state) => {
 			const random = Math.floor(Math.random() * state.allGameIds.length);
 			state.currentGameId = state.allGameIds[random];
-			console.log(parseGameId(state.currentGameId));
 		},
 	},
 });
