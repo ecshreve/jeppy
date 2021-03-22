@@ -5,19 +5,19 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.css";
 import "./QuestionModal.css";
 
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { incrementPlayerScoreByAmount } from "../score-bar/scoreBarSlice";
 
 import { Clue } from "../../requests";
 import { MAX_TIMER_VAL } from "../../consts";
 import { Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 type QuestionModalProps = {
 	clue?: Clue;
 	value: number;
 	show: boolean;
 	handleHide: () => void;
-	playerIDs: number[];
 };
 
 export default function QuestionModal(props: QuestionModalProps) {
@@ -57,22 +57,23 @@ export default function QuestionModal(props: QuestionModalProps) {
 	// Build the array of score buttons for the footer. We use a dummy array with
 	// length equal to the number of players so we can use array.map instead of
 	// looping through and appending.
-	let scoreButtons = props.playerIDs.map((pid) => {
+	const playerNames = useAppSelector((state) => state.config.playerNames);
+	let scoreButtons = playerNames.map((playerName, ind) => {
 		return (
 			<Button
-				key={pid}
+				key={ind}
 				className="footer-item"
 				onClick={() => {
 					dispatch(
 						incrementPlayerScoreByAmount({
-							playerID: pid,
+							playerID: ind + 1,
 							amount: props.value,
 						})
 					);
 					props.handleHide();
 				}}
 			>
-				Player{pid}
+				{playerName}
 			</Button>
 		);
 	});

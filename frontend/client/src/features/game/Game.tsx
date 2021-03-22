@@ -212,7 +212,6 @@ export default function Game() {
 					handleHide={handleHideModal}
 					clue={selectedClue}
 					value={selectedClueValue}
-					playerIDs={[1, 2, 3]}
 				/>
 			)}
 		</>
