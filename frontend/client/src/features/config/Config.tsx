@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
 	Button,
 	ButtonGroup,
+	Card,
 	Dropdown,
 	Form,
 	InputGroup,
@@ -200,11 +201,17 @@ export default function Config() {
 					disabled={player1Name === ""}
 					onClick={() => {
 						dispatch(replacePlayers([player1Name, player2Name, player3Name]));
-						dispatch(setCurrentGameId(selectedGameId));
+						dispatch(
+							setCurrentGameId(
+								gameModeSelection === "SELECT"
+									? selectedGameId
+									: DEVELOPMENT_GAME_ID
+							)
+						);
 						dispatch(setGameActive(true));
 					}}
 				>
-					Save Config
+					Start Game
 				</Button>
 			</div>
 		);
@@ -217,14 +224,16 @@ export default function Config() {
 					<div className="config-pane-header">Welcome to Jeppy!</div>
 					<hr />
 					<div className="config-pane-content">
-						<div>
-							{renderPlayerNameInput()}
-							<hr />
-							{renderGameModeSelection()}
-							{gameModeSelection === "SELECT" && renderGameSelection()}
-							<hr />
-							{renderSaveConfigButton()}
-						</div>
+						<Card>
+							<Card.Body>
+								{renderPlayerNameInput()}
+								<hr />
+								{renderGameModeSelection()}
+								{gameModeSelection === "SELECT" && renderGameSelection()}
+								<hr />
+								{renderSaveConfigButton()}
+							</Card.Body>
+						</Card>
 					</div>
 				</div>
 			</div>

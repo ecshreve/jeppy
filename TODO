@@ -7,6 +7,9 @@ General Improvements:
     ☐ need more comments everywhere
     ☐ come up with a better way to handle the config constants in `consts.ts` 
 
+Frontend:
+    ☐ clean up CSS
+     
 Database:
     ☐ split the `game_id` column into two columns (id and date)
     ☐ add a `game` table to keep track of game level stats / things
