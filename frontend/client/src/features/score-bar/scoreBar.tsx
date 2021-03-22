@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./ScoreBar.css";
+import "./scoreBar.css";
 
 import { useAppSelector } from "../../app/hooks";
 
