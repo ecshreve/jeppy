@@ -25,6 +25,10 @@ export const configSlice = createSlice({
 		setCurrentGameId: (state, action) => {
 			state.currentGameId = action.payload;
 		},
+		setRandomGameId: (state) => {
+			const random = Math.floor(Math.random() * state.allGameIds.length);
+			state.currentGameId = state.allGameIds[random];
+		},
 	},
 });
 
@@ -32,6 +36,7 @@ export const {
 	setGameActive,
 	setAllGameIds,
 	setCurrentGameId,
+	setRandomGameId,
 } = configSlice.actions;
 
 export default configSlice.reducer;

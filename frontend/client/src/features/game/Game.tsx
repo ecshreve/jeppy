@@ -16,7 +16,7 @@ import {
 	clearClues,
 	toggleEnabled,
 } from "../clue/clueSlice";
-import { setCurrentGameId } from "../config/configSlice";
+import { setRandomGameId } from "../config/configSlice";
 import { resetScores } from "../player/playerSlice";
 
 enum Round {
@@ -113,7 +113,6 @@ export default function Game(props: GameProps) {
 		}
 	}, [data, dispatch, round]);
 
-	const allGameIds = useAppSelector((state) => state.config.allGameIds);
 	const categories = getCategories(data);
 	const categoryToClueListMap = getCategoryToClueListMap(categories, data!);
 
@@ -131,8 +130,7 @@ export default function Game(props: GameProps) {
 	};
 
 	const handleClickNewGame = () => {
-		const random = Math.floor(Math.random() * allGameIds.length);
-		dispatch(setCurrentGameId(allGameIds[random]));
+		dispatch(setRandomGameId());
 		dispatch(clearClues());
 		dispatch(resetScores());
 	};
