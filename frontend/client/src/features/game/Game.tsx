@@ -193,6 +193,8 @@ export default function Game() {
 		return <div className="flex-grid">{boardCategories}</div>;
 	};
 
+	console.log(useAppSelector((state) => state.config.playerNames));
+
 	return (
 		<>
 			<div className="game-container">
@@ -201,7 +203,7 @@ export default function Game() {
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
-				<ScoreBar playerIDs={[1, 2, 3]} />
+				<ScoreBar />
 				{renderBoardV2()}
 			</div>
 			{showQuestionModal && (

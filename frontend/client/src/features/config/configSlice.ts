@@ -18,7 +18,9 @@ export const configSlice = createSlice({
 			state.gameActive = action.payload;
 		},
 		replacePlayerNames: (state, action: PayloadAction<string[]>) => {
-			state.playerNames = action.payload;
+			state.playerNames = action.payload.filter(
+				(playerName) => playerName.length > 0
+			);
 		},
 	},
 });

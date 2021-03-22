@@ -4,21 +4,18 @@ import "./scoreBar.css";
 
 import { useAppSelector } from "../../app/hooks";
 
-type ScoreBarProps = {
-	playerIDs: number[];
-};
-
-export default function ScoreBar(props: ScoreBarProps) {
-	// The `state` arg is correctly typed as `RootState` already
+export default function ScoreBar() {
+	const names = useAppSelector((state) => state.config.playerNames);
 	const scores = useAppSelector((state) => state.scoreBar.scores);
 
-	let myscores = props.playerIDs.map((pid) => {
-		const playerScore = scores.find((ps) => ps.playerID === pid);
+	let myscores = names.map((playerName, ind) => {
+		const playerScore = scores.find((ps) => ps.playerID === ind + 1);
 		return playerScore ? (
 			<div key={playerScore.playerID} className="score-item">
-				Player{playerScore.playerID}: ${playerScore.score}
+				{playerName}: ${playerScore.score}
 			</div>
 		) : null;
 	});
+
 	return <div className="score-bar">{myscores}</div>;
 }
