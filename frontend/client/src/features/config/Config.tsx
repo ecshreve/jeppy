@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import {
-	Button,
-	Form,
-	InputGroup,
-	OverlayTrigger,
-	Tooltip,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./Config.css";
 
-import { setGameActive } from "../config/configSlice";
+import { setAllGameIds, setGameActive } from "../config/configSlice";
 import { replacePlayers } from "../player/playerSlice";
 import { useAppDispatch } from "../../app/hooks";
+import { getGameIds } from "../../requests";
 
 export default function Config() {
 	const [player1Name, setPlayer1Name] = useState("");
@@ -20,6 +15,11 @@ export default function Config() {
 	const [player3Name, setPlayer3Name] = useState("");
 
 	const dispatch = useAppDispatch();
+
+	// Only fetch the full list of game ids once when the component mounts.
+	useEffect(() => {
+		getGameIds().then((result) => dispatch(setAllGameIds(result)));
+	}, [dispatch]);
 
 	const renderPlayerNameInput = () => {
 		return (
@@ -34,7 +34,7 @@ export default function Config() {
 						onChange={(e) => setPlayer1Name(e.target.value)}
 					/>
 				</InputGroup>
-				{player1Name != "" && (
+				{player1Name !== "" && (
 					<InputGroup size="lg" className="config-pane-playerNameInput">
 						<InputGroup.Prepend>
 							<InputGroup.Text> </InputGroup.Text>
@@ -45,7 +45,7 @@ export default function Config() {
 						/>
 					</InputGroup>
 				)}
-				{player2Name != "" && (
+				{player2Name !== "" && (
 					<InputGroup size="lg" className="config-pane-playerNameInput">
 						<InputGroup.Prepend>
 							<InputGroup.Text> </InputGroup.Text>

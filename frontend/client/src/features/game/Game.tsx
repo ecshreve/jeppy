@@ -8,7 +8,7 @@ import ScoreBar from "../score-bar/scoreBar";
 
 import "./Game.css";
 
-import { Clue, getClues, getGameIds } from "../../requests";
+import { Clue, getClues } from "../../requests";
 import { DEVELOPMENT_GAME_ID } from "../../consts";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -81,15 +81,9 @@ export default function Game() {
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [selectedClueValue, setSelectedClueValue] = useState(0);
-	const [allGameIds, setAllGameIds] = useState<string[]>([]);
 	const [currentGameId, setCurrentGameId] = useState(DEVELOPMENT_GAME_ID);
 
 	const dispatch = useAppDispatch();
-
-	// Only fetch the full list of game ids once when the component mounts.
-	useEffect(() => {
-		getGameIds().then((result) => setAllGameIds(result));
-	}, []);
 
 	// Fetch new clues whenever the current game id changes, and switch back to
 	// the SINGLE jeopardy round.
@@ -116,6 +110,7 @@ export default function Game() {
 		}
 	}, [data, dispatch, round, currentGameId]);
 
+	const allGameIds = useAppSelector((state) => state.config.allGameIds);
 	const categories = getCategories(data);
 	const categoryToClueListMap = getCategoryToClueListMap(categories, data!);
 
@@ -192,8 +187,6 @@ export default function Game() {
 		});
 		return <div className="flex-grid">{boardCategories}</div>;
 	};
-
-	console.log(useAppSelector((state) => state.player.players));
 
 	return (
 		<>
