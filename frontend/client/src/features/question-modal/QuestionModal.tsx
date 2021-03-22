@@ -6,12 +6,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./QuestionModal.css";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { incrementPlayerScoreByAmount } from "../score-bar/scoreBarSlice";
+import { incrementPlayerScoreByAmount } from "../player/playerSlice";
 
 import { Clue } from "../../requests";
 import { MAX_TIMER_VAL } from "../../consts";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
 
 type QuestionModalProps = {
 	clue?: Clue;
@@ -57,8 +56,8 @@ export default function QuestionModal(props: QuestionModalProps) {
 	// Build the array of score buttons for the footer. We use a dummy array with
 	// length equal to the number of players so we can use array.map instead of
 	// looping through and appending.
-	const playerNames = useAppSelector((state) => state.config.playerNames);
-	let scoreButtons = playerNames.map((playerName, ind) => {
+	const players = useAppSelector((state) => state.player.players);
+	let scoreButtons = players.map((player, ind) => {
 		return (
 			<Button
 				key={ind}
@@ -66,14 +65,14 @@ export default function QuestionModal(props: QuestionModalProps) {
 				onClick={() => {
 					dispatch(
 						incrementPlayerScoreByAmount({
-							playerID: ind + 1,
+							playerName: player.name,
 							amount: props.value,
 						})
 					);
 					props.handleHide();
 				}}
 			>
-				{playerName}
+				{player.name}
 			</Button>
 		);
 	});

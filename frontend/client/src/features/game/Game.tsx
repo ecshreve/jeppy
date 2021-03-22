@@ -17,7 +17,7 @@ import {
 	clearClues,
 	toggleEnabled,
 } from "../clue/clueSlice";
-import { resetScores } from "../score-bar/scoreBarSlice";
+import { resetScores } from "../player/playerSlice";
 
 enum Round {
 	SINGLE,
@@ -193,7 +193,7 @@ export default function Game() {
 		return <div className="flex-grid">{boardCategories}</div>;
 	};
 
-	console.log(useAppSelector((state) => state.config.playerNames));
+	console.log(useAppSelector((state) => state.player.players));
 
 	return (
 		<>

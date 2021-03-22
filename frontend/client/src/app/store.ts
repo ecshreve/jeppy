@@ -3,13 +3,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import clueReducer from "../features/clue/clueSlice";
 import configReducer from "../features/config/configSlice";
 import gameReducer from "../features/game/gameSlice";
-import scoreBarReducer from "../features/score-bar/scoreBarSlice";
+import playerReducer from "../features/player/playerSlice";
 
 export const store = configureStore({
 	reducer: {
 		clue: clueReducer,
 		game: gameReducer,
-		scoreBar: scoreBarReducer,
+		player: playerReducer,
 		config: configReducer,
 	},
 });

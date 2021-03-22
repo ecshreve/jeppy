@@ -5,17 +5,15 @@ import "./scoreBar.css";
 import { useAppSelector } from "../../app/hooks";
 
 export default function ScoreBar() {
-	const names = useAppSelector((state) => state.config.playerNames);
-	const scores = useAppSelector((state) => state.scoreBar.scores);
+	const players = useAppSelector((state) => state.player.players);
 
-	let myscores = names.map((playerName, ind) => {
-		const playerScore = scores.find((ps) => ps.playerID === ind + 1);
-		return playerScore ? (
-			<div key={playerScore.playerID} className="score-item">
-				{playerName}: ${playerScore.score}
+	let scores = players.map((player) => {
+		return (
+			<div key={player.name} className="score-item">
+				{player.name}: ${player.score}
 			</div>
-		) : null;
+		);
 	});
 
-	return <div className="score-bar">{myscores}</div>;
+	return <div className="score-bar">{scores}</div>;
 }

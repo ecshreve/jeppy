@@ -10,7 +10,8 @@ import {
 import "bootstrap/dist/css/bootstrap.css";
 import "./Config.css";
 
-import { setGameActive, replacePlayerNames } from "../config/configSlice";
+import { setGameActive } from "../config/configSlice";
+import { replacePlayers } from "../player/playerSlice";
 import { useAppDispatch } from "../../app/hooks";
 
 export default function Config() {
@@ -72,7 +73,7 @@ export default function Config() {
 							disabled={player1Name === ""}
 							onClick={() => {
 								dispatch(
-									replacePlayerNames([player1Name, player2Name, player3Name])
+									replacePlayers([player1Name, player2Name, player3Name])
 								);
 								dispatch(setGameActive(true));
 							}}
