@@ -9,7 +9,6 @@ import ScoreBar from "../score-bar/scoreBar";
 import "./Game.css";
 
 import { Clue, getClues } from "../../requests";
-import { DEVELOPMENT_GAME_ID } from "../../consts";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	reenableAllClues,
@@ -17,6 +16,7 @@ import {
 	clearClues,
 	toggleEnabled,
 } from "../clue/clueSlice";
+import { setCurrentGameId } from "../config/configSlice";
 import { resetScores } from "../player/playerSlice";
 
 enum Round {
@@ -75,22 +75,25 @@ const getEmptyClue = (ind: number) => {
 	);
 };
 
-export default function Game() {
+type GameProps = {
+	gameId: string;
+};
+
+export default function Game(props: GameProps) {
 	const [data, setData] = useState<Clue[]>();
 	const [round, setRound] = useState(Round.SINGLE);
 	const [showQuestionModal, setShowQuestionModal] = useState(false);
 	const [selectedClue, setSelectedClue] = useState<Clue>();
 	const [selectedClueValue, setSelectedClueValue] = useState(0);
-	const [currentGameId, setCurrentGameId] = useState(DEVELOPMENT_GAME_ID);
 
 	const dispatch = useAppDispatch();
 
 	// Fetch new clues whenever the current game id changes, and switch back to
 	// the SINGLE jeopardy round.
 	useEffect(() => {
-		getClues(currentGameId).then((result) => setData(result));
+		getClues(props.gameId).then((result) => setData(result));
 		setRound(0);
-	}, [currentGameId]);
+	}, [props.gameId]);
 
 	// Reset the clues array when the current game id or round changes.
 	useEffect(() => {
@@ -108,7 +111,7 @@ export default function Game() {
 		if (clueIds) {
 			dispatch(replaceClues(clueIds));
 		}
-	}, [data, dispatch, round, currentGameId]);
+	}, [data, dispatch, round]);
 
 	const allGameIds = useAppSelector((state) => state.config.allGameIds);
 	const categories = getCategories(data);
@@ -129,7 +132,7 @@ export default function Game() {
 
 	const handleClickNewGame = () => {
 		const random = Math.floor(Math.random() * allGameIds.length);
-		setCurrentGameId(allGameIds[random]);
+		dispatch(setCurrentGameId(allGameIds[random]));
 		dispatch(clearClues());
 		dispatch(resetScores());
 	};
@@ -149,7 +152,7 @@ export default function Game() {
 		let myclues = rawClues.map((c, ind) => {
 			return (
 				<ClueComponent
-					key={currentGameId + c.clue_id}
+					key={props.gameId + c.clue_id}
 					value={multiplier * (ind + 1)}
 					clue={c}
 					handleSelect={handleClickClue}
@@ -192,7 +195,7 @@ export default function Game() {
 		<>
 			<div className="game-container">
 				<StatusBar
-					game_id={currentGameId}
+					game_id={props.gameId}
 					handleClickRestart={handleClickRestart}
 					handleClickNewGame={handleClickNewGame}
 				/>
